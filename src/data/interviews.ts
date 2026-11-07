@@ -128,7 +128,7 @@ export const QA_SETS = {
       ]),
       q('„Kochst du gern?"', '“Do you like cooking?”', [
         a(2, 'Ja! Ich koche euch mal Phở.', 'Yes! I’ll make you phở.', 'Phở! Wann?!', 'Phở! When?!'),
-        a(1, 'Em chủ yếu ăn mì gói.', 'Mostly instant noodles.', 'Haha, kennen wir.', 'Haha, been there.'),
+        a(1, 'Em chủ yếu ăn mì tôm.', 'Mostly instant noodles.', 'Haha, kennen wir.', 'Haha, been there.'),
         a(0, 'Không, ngày nào em cũng gọi đồ ăn.', 'No, I order food every day.', 'Teuer…', 'Expensive…'),
       ]),
       q('„Was machst du in Deutschland?"', '“What are you doing in Germany?”', [

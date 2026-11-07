@@ -8,6 +8,13 @@ import { pay } from './effects'
 import { spendTime } from './time'
 import { useTime } from '../../store/timeStore'
 import { formatMoney } from '../../i18n/format'
+import { useUI } from '../../store/uiStore'
+import { useWorld } from '../../store/worldStore'
+import type { Localized } from '../../i18n/localized'
+import { CLASSROOM, EXAM_HALL, HOME_ROOM, type Seat } from '../scenes/interiors'
+import { playSfx } from './audio'
+import { sitAt, standUp } from './seat'
+import { travelTo } from './travel'
 
 /**
  * Learning German (plan §6 chapter 1, milestone M4): enrol in a course, practise with
@@ -31,6 +38,7 @@ function gainXp(correct: number, total: number, factor: number) {
   const g = CONFIG.german
   const xp = Math.round((correct * g.xpPerCorrect + (correct === total ? g.perfectBonus : 0)) * factor)
   usePlayer.getState().addGermanXp(xp)
+  bumpFlag('log.germanXp', xp)
   const { german } = usePlayer.getState()
   const need = germanXpNeeded(german.level)
   pushToast('toast.germanXp', 'good', { xp, have: Math.min(german.xp, need), need })
@@ -48,6 +56,48 @@ function enroll() {
   return true
 }
 
+const L = (vi: string, en: string, de: string): Localized => ({ vi, en, de })
+
+/** Where you sit for a lesson in the current scene (none in the WG: the laptop is enough). */
+function studySeat(): { seat: Seat; intro: { icon: string; label: Localized; tone: 'chalk' | 'paper' } } | null {
+  const scene = useWorld.getState().scene
+  const lessonNo = flagNumber('german.lessons') + 1
+  if (scene === 'classroom') {
+    return {
+      seat: CLASSROOM.seat,
+      intro: { icon: '🔔', label: L(`Vào tiết · Bài ${lessonNo}`, `Class begins · Lesson ${lessonNo}`, `Unterricht · Lektion ${lessonNo}`), tone: 'chalk' },
+    }
+  }
+  if (scene === 'home') {
+    return { seat: HOME_ROOM.deskSeat, intro: { icon: '📖', label: L('Tự học bên bàn học', 'Studying at your desk', 'Lernen am Schreibtisch'), tone: 'paper' } }
+  }
+  return null
+}
+
+/** Ring the bell (or open the notebook), sit down, then start the mini-game. */
+function startLesson(spec: MinigameSpec, onDone: (correct: number, total: number) => void) {
+  const place = studySeat()
+  const run = () =>
+    useMinigame.getState().start(spec, (r) => {
+      onDone(r.correct, r.total)
+      if (place) standUp()
+    })
+  if (!place) {
+    run()
+    return
+  }
+  const ui = useUI.getState()
+  ui.setTransition({ label: place.intro.label, long: false, icon: place.intro.icon, tone: place.intro.tone })
+  playSfx(place.intro.icon === '🔔' ? 'bell' : 'click')
+  window.setTimeout(() => {
+    sitAt(place.seat)
+    window.setTimeout(() => {
+      useUI.getState().setTransition(null)
+      run()
+    }, 350)
+  }, 900)
+}
+
 function practise(factor: number, minutes: number, energy: number) {
   const player = usePlayer.getState()
   const { level } = player.german
@@ -62,8 +112,8 @@ function practise(factor: number, minutes: number, energy: number) {
   player.spendEnergy(energy)
   spendTime(minutes)
   const spec = lessonSpec(level)
+  startLesson(spec, (correct, total) => gainXp(correct, total, factor))
   bumpFlag('german.lessons')
-  useMinigame.getState().start(spec, (r) => gainXp(r.correct, r.total, factor))
   return true
 }
 
@@ -94,21 +144,42 @@ function exam() {
     return false
   }
   if (!pay(course.examFee)) return false
-  spendTime(CONFIG.german.examMinutes)
-  useMinigame.getState().start({ kind: 'exam', level }, (r) => {
-    const p = usePlayer.getState()
-    if (r.passed) {
-      p.setGerman({ level: level + 1, xp: 0 })
-      p.changeMood(CONFIG.german.examPassMood)
-      setFlag(certFlag(level), useTime.getState().day)
-      pushToast('toast.examPassed', 'good', { level: course.name })
-    } else {
-      p.changeMood(CONFIG.german.examFailMood)
-      p.setGerman({ level, xp: Math.round(xp * 0.6) })
-      pushToast('toast.examFailed', 'bad', { level: course.name })
-    }
+  // Off to the exam room: sit at your numbered desk, then the paper is handed out.
+  travelTo('examHall', 'default', {
+    icon: '📝',
+    label: L(`Kỳ thi tiếng Đức ${course.name}`, `German exam ${course.name}`, `Deutschprüfung ${course.name}`),
+    subtitle: L('Phòng thi · Giữ trật tự', 'Exam room · Quiet please', 'Prüfungsraum · Bitte Ruhe'),
+    tone: 'paper',
+    onDone: () => {
+      sitAt(EXAM_HALL.seat, 0, 0.7)
+      window.setTimeout(() => useMinigame.getState().start({ kind: 'exam', level }, (r) => finishExam(r.passed, level, xp)), 500)
+    },
   })
   return true
+}
+
+function finishExam(passed: boolean, level: number, xpBefore: number) {
+  const course = CONFIG.german.levels[level]
+  const p = usePlayer.getState()
+  spendTime(CONFIG.german.examMinutes)
+  if (passed) {
+    p.setGerman({ level: level + 1, xp: 0 })
+    p.changeMood(CONFIG.german.examPassMood)
+    setFlag(certFlag(level), useTime.getState().day)
+    pushToast('toast.examPassed', 'good', { level: course.name })
+  } else {
+    p.changeMood(CONFIG.german.examFailMood)
+    p.setGerman({ level, xp: Math.round(xpBefore * 0.6) })
+    pushToast('toast.examFailed', 'bad', { level: course.name })
+  }
+  standUp()
+  // Back to class, where Thầy Minh is waiting for the news.
+  travelTo('classroom', 'default', {
+    icon: passed ? '🎉' : '💪',
+    label: passed ? L(`Đậu ${course.name}!`, `Passed ${course.name}!`, `${course.name} bestanden!`) : L('Lần sau sẽ đậu!', 'Next time!', 'Nächstes Mal!'),
+    subtitle: L('Về lớp Thầy Minh', 'Back to Teacher Minh’s class', 'Zurück in den Kurs'),
+    tone: passed ? 'paper' : 'night',
+  })
 }
 
 const enrolled = () => !!getFlag(courseFlag(usePlayer.getState().german.level))

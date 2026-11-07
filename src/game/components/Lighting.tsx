@@ -24,14 +24,21 @@ const SHADOW_EXTENT = 22
 const RAIN_SKY = new Color('#a9b4c2')
 const RAIN_FOG = new Color('#b9c2cc')
 
+let lastScene = ''
+
 /** Ease weather values toward their targets (minutes-scale changes, not instant). */
 function updateWeather(dt: number, indoor: boolean) {
   const { day, minutes } = useTime.getState()
   const country = SCENES[useWorld.getState().scene].country
   const raining = isRaining(day, minutes, country)
-  const k = 1 - Math.exp(-dt * 0.8)
-  weatherState.rainOutside += ((raining ? 1 : 0) - weatherState.rainOutside) * k
-  weatherState.rain += ((raining && !indoor ? 1 : 0) - weatherState.rain) * k
+  // A new place (behind the fade): jump straight to its weather, no petals drifting indoors.
+  const scene = useWorld.getState().scene
+  const k = scene !== lastScene ? 1 : 1 - Math.exp(-dt * 0.8)
+  lastScene = scene
+  // Hà Nội's mưa phùn is a fine drizzle; German rain is the real thing.
+  const strength = raining ? (country === 'vn' ? CONFIG.weather.vnRainStrength : 1) : 0
+  weatherState.rainOutside += (strength - weatherState.rainOutside) * k
+  weatherState.rain += ((indoor ? 0 : strength) - weatherState.rain) * k
   weatherState.petals += ((!indoor && petalsWanted(minutes, country, raining) ? 1 : 0) - weatherState.petals) * k
   setRainAmbience(weatherState.rainOutside * (indoor ? 0.35 : 1))
 }

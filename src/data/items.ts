@@ -18,6 +18,7 @@ export type ItemIconName =
   | 'kaffee'
   | 'pizza'
   | 'kuchen'
+  | 'hoa'
 
 export interface ItemDef {
   id: string
@@ -32,6 +33,16 @@ export interface ItemDef {
 }
 
 export const ITEMS = {
+  hoaCuc: {
+    id: 'hoaCuc',
+    name: { vi: 'Bó cúc họa mi', en: 'Bunch of daisies', de: 'Gänseblümchenstrauß' },
+    icon: 'hoa',
+    price: 30_000,
+    currency: 'VND',
+    energy: 0,
+    mood: 12,
+    minutes: 5,
+  },
   banhMi: {
     id: 'banhMi',
     name: { vi: 'Bánh mì thịt', en: 'Bánh mì sandwich', de: 'Bánh-mì-Sandwich' },
@@ -54,7 +65,7 @@ export const ITEMS = {
   },
   miGoi: {
     id: 'miGoi',
-    name: { vi: 'Mì gói', en: 'Instant noodles', de: 'Instantnudeln' },
+    name: { vi: 'Mì tôm', en: 'Instant noodles', de: 'Instantnudeln' },
     icon: 'miGoi',
     price: 6_000,
     currency: 'VND',
@@ -175,7 +186,7 @@ export const ITEMS = {
   },
   asiaNudeln: {
     id: 'asiaNudeln',
-    name: { vi: 'Mì gói (siêu thị châu Á)', en: 'Instant noodles (Asia shop)', de: 'Instantnudeln (Asia-Markt)' },
+    name: { vi: 'Mì tôm (siêu thị châu Á)', en: 'Instant noodles (Asia shop)', de: 'Instantnudeln (Asia-Markt)' },
     icon: 'miGoi',
     price: 1.2,
     currency: 'EUR',

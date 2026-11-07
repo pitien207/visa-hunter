@@ -17,13 +17,15 @@ function rand(seed: number) {
   return x - Math.floor(x)
 }
 
-function onRoad(x: number, z: number, sideRoad: boolean) {
+function onRoad(x: number, z: number, sideRoad: boolean, lake: boolean) {
+  // Hồ Gươm lies to the south of the Hà Nội street: no buildings there.
+  if (lake && z > ROAD.maxZ + 3) return true
   const onMain = z > ROAD.minZ - 3.5 && z < ROAD.maxZ + 3.5
   const onSide = sideRoad && x > SIDE_ROAD.minX - 3 && x < SIDE_ROAD.maxX + 3 && z < ROAD.minZ
   return onMain || onSide
 }
 
-function backdropShapes(colors: string[], roof: string, sideRoad: boolean, tree: 'green' | 'linden'): ShapeItem[] {
+function backdropShapes(colors: string[], roof: string, sideRoad: boolean, tree: 'green' | 'linden', lake: boolean): ShapeItem[] {
   const s: ShapeItem[] = []
   let seed = 1
   for (let ring = 0; ring < 2; ring++) {
@@ -34,7 +36,7 @@ function backdropShapes(colors: string[], roof: string, sideRoad: boolean, tree:
       const r = radius + rand(seed++) * 4
       const x = Math.cos(a) * r
       const z = Math.sin(a) * r
-      if (onRoad(x, z, sideRoad)) continue
+      if (onRoad(x, z, sideRoad, lake)) continue
       const w = 4 + rand(seed++) * 4
       const d = 4 + rand(seed++) * 3
       const h = 5 + rand(seed++) * (ring === 0 ? 8 : 14)
@@ -56,12 +58,14 @@ export function Backdrop({
   roof = P.cream,
   sideRoad = true,
   tree = 'green',
+  lake = false,
 }: {
   colors?: string[]
   roof?: string
   sideRoad?: boolean
   tree?: 'green' | 'linden'
+  lake?: boolean
 }) {
-  const shapes = useMemo(() => backdropShapes(colors, roof, sideRoad, tree), [colors, roof, sideRoad, tree])
+  const shapes = useMemo(() => backdropShapes(colors, roof, sideRoad, tree, lake), [colors, roof, sideRoad, tree, lake])
   return <Shapes shapes={shapes} castShadow={false} receiveShadow={false} />
 }

@@ -24,8 +24,12 @@ export interface TubeHouseOptions {
   roofTank?: boolean
   bougainvillea?: boolean
   airCon?: boolean
-  /** Ground floor is a tạp hóa (corner grocery) instead of a half-closed shutter. */
+  /** Ground floor is a tạp hóa (corner grocery) instead of wooden doors. */
   grocery?: boolean
+  /** Old Quarter look: terracotta tiled roof over the front, panelled wooden doors. */
+  oldQuarter?: boolean
+  /** A Vietnamese flag on a slanted pole (streets are full of them around 2/9). */
+  flag?: boolean
 }
 
 export interface TubeHouseProps extends TubeHouseOptions {
@@ -75,7 +79,7 @@ function groceryShapes(openW: number, f: number): ShapeItem[] {
 
 const FLOOR_H = 2.8
 
-/** A narrow, deep Vietnamese "nhà ống": shop-front ground floor, balconies above, water tank on the roof. */
+/** A narrow, deep "nhà ống": shop-front ground floor, balconies above; Old Quarter tiled roof or a water tank. */
 function tubeHouseShapes(o: TubeHouseOptions): ShapeItem[] {
   // (grocery front replaces the dark doorway, shutter and stools below)
   const { width: w, depth: d, floors, palette: c } = o
@@ -85,9 +89,14 @@ function tubeHouseShapes(o: TubeHouseOptions): ShapeItem[] {
 
   // Main block + roof parapet
   s.push({ box: [w, H, d], at: [0, H / 2, 0], color: c.wall })
-  s.push({ box: [w + 0.12, 0.6, 0.2], at: [0, H + 0.3, f - 0.1], color: c.trim })
-  s.push({ box: [w * 0.36, 0.32, 0.22], at: [0, H + 0.75, f - 0.1], color: c.trim })
-  s.push({ cyl: [0.12, 0.12, 0.08, 10], at: [0, H + 0.75, f + 0.02], rot: [Math.PI / 2, 0, 0], color: c.accent })
+  if (o.oldQuarter) {
+    // Eave moulding under the tiled roof
+    s.push({ box: [w + 0.16, 0.18, 0.3], at: [0, H + 0.02, f + 0.05], color: c.trim })
+  } else {
+    s.push({ box: [w + 0.12, 0.6, 0.2], at: [0, H + 0.3, f - 0.1], color: c.trim })
+    s.push({ box: [w * 0.36, 0.32, 0.22], at: [0, H + 0.75, f - 0.1], color: c.trim })
+    s.push({ cyl: [0.12, 0.12, 0.08, 10], at: [0, H + 0.75, f + 0.02], rot: [Math.PI / 2, 0, 0], color: c.accent })
+  }
   s.push({ box: [0.16, 0.45, d - 0.2], at: [-w / 2 + 0.08, H + 0.22, 0], color: c.trim })
   s.push({ box: [0.16, 0.45, d - 0.2], at: [w / 2 - 0.08, H + 0.22, 0], color: c.trim })
   s.push({ box: [w, 0.45, 0.16], at: [0, H + 0.22, -f + 0.08], color: c.trim })
@@ -100,9 +109,23 @@ function tubeHouseShapes(o: TubeHouseOptions): ShapeItem[] {
     s.push(...groceryShapes(openW, f))
   } else {
     s.push({ box: [openW, 2.25, 0.06], at: [0, 1.125, f], color: P.darkInterior })
-    s.push({ box: [openW, 0.72, 0.05], at: [0, 1.9, f + 0.06], color: c.shutter })
-    for (let i = 0; i < 3; i++) {
-      s.push({ box: [openW, 0.025, 0.02], at: [0, 1.66 + i * 0.22, f + 0.09], color: c.trim })
+    if (o.oldQuarter) {
+      // Panelled wooden folding doors (cửa ô hộp), folded open to both sides, vented transom
+      const panelW = openW / 6
+      for (const side of [-1, 1]) {
+        for (let p = 0; p < 2; p++) {
+          const px = side * (openW / 2 - panelW / 2 - p * (panelW - 0.04))
+          s.push({ box: [panelW, 2.0, 0.05], at: [px, 1.0, f + 0.08 + p * 0.06], rot: [0, side * (p ? -0.5 : 0.5), 0], color: '#8e5a34' })
+          for (let r = 0; r < 3; r++) s.push({ box: [panelW * 0.7, 0.48, 0.02], at: [px, 0.4 + r * 0.62, f + 0.12 + p * 0.06], rot: [0, side * (p ? -0.5 : 0.5), 0], color: '#a8703f' })
+        }
+      }
+      s.push({ box: [openW, 0.24, 0.06], at: [0, 2.12, f + 0.05], color: '#8e5a34' })
+      for (let v = 0; v < 8; v++) s.push({ box: [0.04, 0.16, 0.07], at: [-openW / 2 + 0.2 + v * ((openW - 0.4) / 7), 2.12, f + 0.06], color: '#5b3a22' })
+    } else {
+      s.push({ box: [openW, 0.72, 0.05], at: [0, 1.9, f + 0.06], color: c.shutter })
+      for (let i = 0; i < 3; i++) {
+        s.push({ box: [openW, 0.025, 0.02], at: [0, 1.66 + i * 0.22, f + 0.09], color: c.trim })
+      }
     }
   }
   s.push({ box: [sideW, 2.65, 0.1], at: [-(openW / 2 + sideW / 2), 1.325, f + 0.03], color: c.trim })
@@ -156,6 +179,37 @@ function tubeHouseShapes(o: TubeHouseOptions): ShapeItem[] {
 
   const topY = (floors - 1) * FLOOR_H
 
+  if (o.oldQuarter) {
+    // Weathered darker base, drainpipe, electricity meters
+    s.push({ box: [w + 0.02, 0.55, 0.03], at: [0, 0.27, f + 0.005], color: '#c99a52' })
+    s.push({ cyl: [0.05, 0.05, H, 6], at: [-w / 2 + 0.12, H / 2, f + 0.08], color: '#8d8a84' })
+    for (let m = 0; m < 2; m++) {
+      s.push({ box: [0.22, 0.28, 0.1], at: [-w / 2 + 0.38 + m * 0.26, 2.75, f + 0.08], color: '#d9d6cf' })
+      s.push({ box: [0.12, 0.08, 0.02], at: [-w / 2 + 0.38 + m * 0.26, 2.8, f + 0.14], color: '#7fb8e8' })
+    }
+    // Terracotta tiled roof sloping down to the street (ridge parallel to the street)
+    const slope = 2.6
+    const pitch = 0.42
+    const ry = H + 0.62
+    const rz = f - 1.0
+    s.push({ box: [w + 0.3, 0.12, slope], at: [0, ry, rz], rot: [pitch, 0, 0], color: '#c8653d' })
+    const rows = Math.round((w + 0.2) / 0.22)
+    for (let i = 0; i <= rows; i++) {
+      s.push({ cyl: [0.055, 0.055, slope, 6], at: [-w / 2 - 0.1 + i * ((w + 0.2) / rows), ry + 0.07, rz], rot: [Math.PI / 2 + pitch, 0, 0], color: i % 2 ? '#b4552f' : '#c96a40' })
+    }
+    s.push({ cyl: [0.1, 0.1, w + 0.34, 8], at: [0, ry + 0.58, rz - 1.18], rot: [0, 0, Math.PI / 2], color: '#9c4628' })
+    // Gable walls under the roof edges
+    for (const side of [-1, 1]) s.push({ box: [0.14, 0.9, 2.2], at: [side * (w / 2 - 0.07), H + 0.42, rz - 0.15], rot: [pitch * 0.5, 0, 0], color: c.wall })
+  }
+
+  if (o.flag) {
+    const fy = FLOOR_H + 1.9
+    const fx = w / 2 - 0.35
+    s.push({ cyl: [0.025, 0.025, 1.5, 6], at: [fx, fy, f + 0.55], rot: [0.75, 0, 0], color: '#c9c3b8' })
+    s.push({ box: [0.03, 0.42, 0.62], at: [fx, fy + 0.25, f + 0.95], rot: [0.12, 0, 0], color: '#da251d' })
+    s.push({ ico: [0.07, 0], at: [fx + 0.02, fy + 0.27, f + 0.94], scale: [0.3, 1, 1], color: '#ffde00' })
+  }
+
   if (o.airCon) {
     const ax = w / 2 - 0.55
     s.push({ box: [0.72, 0.48, 0.28], at: [ax, topY + 2.5, f + 0.15], color: P.white })
@@ -192,10 +246,10 @@ function tubeHouseShapes(o: TubeHouseOptions): ShapeItem[] {
 }
 
 export function TubeHouse({ position, sign, ...options }: TubeHouseProps) {
-  const { width, depth, floors, palette, roofTank, bougainvillea, airCon, grocery } = options
+  const { width, depth, floors, palette, roofTank, bougainvillea, airCon, grocery, oldQuarter, flag } = options
   const shapes = useMemo(
-    () => tubeHouseShapes({ width, depth, floors, palette, roofTank, bougainvillea, airCon, grocery }),
-    [width, depth, floors, palette, roofTank, bougainvillea, airCon, grocery],
+    () => tubeHouseShapes({ width, depth, floors, palette, roofTank, bougainvillea, airCon, grocery, oldQuarter, flag }),
+    [width, depth, floors, palette, roofTank, bougainvillea, airCon, grocery, oldQuarter, flag],
   )
   const height = floors * FLOOR_H
 

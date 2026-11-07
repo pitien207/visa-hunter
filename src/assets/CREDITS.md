@@ -12,6 +12,7 @@ Every asset must be CC0 or our own (plan §2, §9). List each one here with its 
   original work, no image files.
 
 ## Icons
+- Title / loading illustration of Hồ Gươm (Tháp Rùa, Thê Húc bridge) is original inline SVG (`src/ui/HanoiScenery.tsx`).
 - App icon (passport + paper plane) is original artwork: `pwa/icon.svg`, rendered to PNG in `public/icons/`.
 - HUD, action and item icons are original inline SVGs (`src/ui/icons.tsx`, `ActionIcon.tsx`, `ItemIcon.tsx`).
 - Dialogue portraits are drawn from each character's outfit data (`src/ui/Portrait.tsx`).

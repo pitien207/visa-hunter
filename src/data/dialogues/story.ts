@@ -7,7 +7,7 @@ import type { DialogueDef } from '../dialogueTypes'
 /** Main-story characters in Vietnam: German class, visa advisor, xe ôm, embassy, airport. */
 
 const L = (vi: string, en: string, de?: string): Localized => ({ vi, en, de })
-const BYE = L('Dạ con chào thầy ạ.', 'Goodbye, teacher.', 'Auf Wiedersehen!')
+const BYE = L('Dạ em chào thầy ạ.', 'Goodbye, teacher.', 'Auf Wiedersehen!')
 
 export const STORY_DIALOGUES: Record<string, DialogueDef> = {
   thayMinh: {
@@ -28,12 +28,12 @@ export const STORY_DIALOGUES: Record<string, DialogueDef> = {
         ],
       },
       enrolled: {
-        text: L('Tốt lắm! Mỗi buổi học là một trò chơi nhỏ: từ vựng, der/die/das, ghép câu. Đủ XP thì thi nha.', 'Great! Each lesson is a little game: vocabulary, der/die/das, sentences. Get enough XP, then take the exam.'),
+        text: L('Tốt lắm! Mỗi buổi học là một trò chơi nhỏ: từ vựng, der/die/das, ghép câu. Đủ XP thì thi nhé.', 'Great! Each lesson is a little game: vocabulary, der/die/das, sentences. Get enough XP, then take the exam.'),
         next: 'hello',
       },
       tips: {
         text: [
-          L('Mẹo nè: danh từ giống cái hay có đuôi -ung, -heit, -keit: die Wohnung, die Freiheit.', 'Tip: feminine nouns often end in -ung, -heit, -keit: die Wohnung, die Freiheit.'),
+          L('Mẹo đây: danh từ giống cái hay có đuôi -ung, -heit, -keit: die Wohnung, die Freiheit.', 'Tip: feminine nouns often end in -ung, -heit, -keit: die Wohnung, die Freiheit.'),
           L('Ở Đức đúng giờ là số một. Trễ 5 phút là… thôi khỏi nói!', 'In Germany punctuality is everything. Five minutes late is… let’s not talk about it!'),
           L('Từ quan trọng nhất ở Đức là „Termin". Không có Termin thì không làm gì được hết!', 'The most important German word is “Termin”. Without one, nothing happens!'),
           L('Về nhà tự học cũng được, nhưng đi học với thầy thì nhanh hơn gấp đôi đó.', 'Self-study at home works too, but class is twice as fast.'),
@@ -42,8 +42,8 @@ export const STORY_DIALOGUES: Record<string, DialogueDef> = {
         next: 'hello',
       },
       graduated: {
-        text: L('Em có B1 rồi! Thầy tự hào lắm. Giờ qua quán cà phê gặp chị Mai tư vấn làm hồ sơ nhé.', 'You have B1! I’m so proud. Now go see Mai at the café about your visa papers.'),
-        choices: [{ text: L('Dạ con cảm ơn thầy!', 'Thank you, teacher!'), effect: { type: 'mood', amount: 5 } }],
+        text: L('Em có B1 rồi! Thầy tự hào lắm. Giờ sang quán cà phê gặp chị Mai tư vấn làm hồ sơ nhé.', 'You have B1! I’m so proud. Now go see Mai at the café about your visa papers.'),
+        choices: [{ text: L('Dạ em cảm ơn thầy ạ!', 'Thank you, teacher!'), effect: { type: 'mood', amount: 5 } }],
       },
     },
   },
@@ -57,7 +57,7 @@ export const STORY_DIALOGUES: Record<string, DialogueDef> = {
     ],
     nodes: {
       early: {
-        text: L('Chào em! Chị tư vấn du học Đức nè. Muốn đi Đức thì trước hết phải có tiếng Đức B1 nha. Em đang học tới đâu rồi?', 'Hi! I advise on studying in Germany. First you need German at B1. How far along are you?'),
+        text: L('Chào em! Chị là tư vấn du học Đức đây. Muốn đi Đức thì trước hết phải có tiếng Đức B1 nhé. Em đang học tới đâu rồi?', 'Hi! I advise on studying in Germany. First you need German at B1. How far along are you?'),
         choices: [
           { text: L('Studium khác Ausbildung thế nào ạ?', 'How is Studium different from Ausbildung?'), next: 'explain' },
           { text: L('Dạ em đi học tiếp đây ạ.', 'I’ll keep studying.') },
@@ -78,7 +78,7 @@ export const STORY_DIALOGUES: Record<string, DialogueDef> = {
         ],
       },
       choose: {
-        text: L('Em có B1 rồi, giỏi quá! Giờ chọn con đường nào nè?', 'You have B1, well done! Which path will you take?'),
+        text: L('Em có B1 rồi, giỏi quá! Giờ chọn con đường nào đây?', 'You have B1, well done! Which path will you take?'),
         choices: [
           { text: L('Du học (Studium)', 'University (Studium)'), effect: { type: 'action', id: 'visa.choosePath', arg: 'studium' }, next: 'chosen' },
           { text: L('Học nghề điều dưỡng (Ausbildung)', 'Nursing training (Ausbildung)'), effect: { type: 'action', id: 'visa.choosePath', arg: 'ausbildung' }, next: 'chosen' },
@@ -92,7 +92,7 @@ export const STORY_DIALOGUES: Record<string, DialogueDef> = {
       helping: {
         text: [
           L('Hồ sơ tới đâu rồi em? Thiếu gì chị chỉ cho.', 'How are your papers going? I can help.'),
-          L('Nhớ nha: đi phỏng vấn mà thiếu một tờ giấy thôi là bị từ chối đó!', 'Remember: one missing paper at the interview and you’re rejected!'),
+          L('Nhớ nhé: đi phỏng vấn mà thiếu một tờ giấy thôi là bị từ chối đó!', 'Remember: one missing paper at the interview and you’re rejected!'),
         ],
         choices: [
           { text: L('Mở hồ sơ visa', 'Open the visa file'), effect: { type: 'action', id: 'visa.openPanel' } },
@@ -118,21 +118,21 @@ export const STORY_DIALOGUES: Record<string, DialogueDef> = {
     nodes: {
       hello: {
         text: [
-          L('Đi đâu em? {fare} một chuyến, chạy lẹ như gió!', 'Where to? {fare} a ride, fast as the wind!'),
-          L('Xe ôm đây! Đi đâu anh chở, đường nào anh cũng rành.', 'Motorbike taxi! I know every road in town.'),
+          L('Đi đâu em? {fare} một cuốc, đi nhanh như gió!', 'Where to? {fare} a ride, fast as the wind!'),
+          L('Xe ôm đây! Đi đâu anh chở, đường nào anh cũng thuộc.', 'Motorbike taxi! I know every road in town.'),
         ],
         choices: [
           { text: L('Đại sứ quán Đức', 'German Embassy'), if: { flag: 'visa.path' }, cost: CONFIG.visa.xeOmFare, effect: { type: 'action', id: 'xeOm.embassy' } },
-          { text: L('Sân bay Tân Sơn Nhất', 'Tân Sơn Nhất Airport'), if: { flag: 'visa.readyDay' }, cost: CONFIG.visa.xeOmFare, effect: { type: 'action', id: 'xeOm.airport' } },
+          { text: L('Sân bay Nội Bài', 'Nội Bài Airport'), if: { flag: 'visa.readyDay' }, cost: CONFIG.visa.xeOmFare, effect: { type: 'action', id: 'xeOm.airport' } },
           { text: L('Anh kể chuyện gì vui đi', 'Tell me something fun'), next: 'story' },
           { text: L('Dạ thôi anh.', 'Not now.') },
         ],
       },
       story: {
         text: [
-          L('Hôm qua anh chở một ông Tây, ổng nói „Danke" hoài, anh tưởng ổng kêu „đắng"!', 'Yesterday a foreigner kept saying “Danke” — I thought he said “đắng” (bitter)!'),
-          L('Kẹt xe giờ cao điểm thì anh đi đường hẻm, hẻm nào anh cũng thuộc.', 'At rush hour I take the alleys — I know them all.'),
-          L('Em đi Đức nhớ gửi anh tấm hình tuyết nha, anh chưa thấy tuyết bao giờ.', 'Send me a photo of snow from Germany — I’ve never seen it.'),
+          L('Hôm qua anh chở một ông Tây, ông ấy cứ nói „Danke" mãi, anh tưởng ông ấy kêu „đắng"!', 'Yesterday a foreigner kept saying “Danke” — I thought he said “đắng” (bitter)!'),
+          L('Tắc đường giờ cao điểm thì anh len vào ngõ, ngõ nào anh cũng thuộc.', 'At rush hour I take the alleys — I know them all.'),
+          L('Em sang Đức nhớ gửi anh cái ảnh tuyết nhé, anh chưa thấy tuyết bao giờ.', 'Send me a photo of snow from Germany — I’ve never seen it.'),
         ],
         next: 'hello',
       },
@@ -162,7 +162,7 @@ export const STORY_DIALOGUES: Record<string, DialogueDef> = {
     start: 'hello',
     nodes: {
       hello: {
-        text: L('Con đi mạnh giỏi nha. Nhớ ăn uống đầy đủ, mặc ấm, rảnh thì gọi video về cho mẹ.', 'Take care, my child. Eat well, dress warmly, and video-call me when you can.'),
+        text: L('Con đi đường bình an nhé. Nhớ ăn uống đầy đủ, mặc ấm, rảnh thì gọi video về cho mẹ.', 'Take care, my child. Eat well, dress warmly, and video-call me when you can.'),
         next: 'bag',
       },
       bag: {
@@ -183,7 +183,7 @@ export const STORY_DIALOGUES: Record<string, DialogueDef> = {
     start: 'hello',
     nodes: {
       hello: {
-        text: L('Quần áo mới về nè em! Mặc vô là đẹp liền, đi Đức cũng sang.', 'New clothes just in! Look great — even in Germany.'),
+        text: L('Quần áo mới về đây em! Mặc vào là xinh ngay, sang Đức cũng không lo!', 'New clothes just in! Look great — even in Germany.'),
         choices: [
           { text: L('Cho em xem đồ', 'Show me'), effect: { type: 'action', id: 'clothes.open', arg: 'vnClothes' } },
           { text: L('Dạ thôi chị.', 'No thanks.') },
@@ -196,10 +196,10 @@ export const STORY_DIALOGUES: Record<string, DialogueDef> = {
     start: 'hello',
     nodes: {
       hello: {
-        text: L('Hớt tóc hông con? Chú hớt ở đây ba mươi năm rồi, đẹp như ca sĩ!', 'Haircut? I’ve cut hair on this corner for thirty years — you’ll look like a pop star!'),
+        text: L('Cắt tóc không cháu? Chú cắt ở vỉa hè này ba mươi năm rồi, đẹp như ca sĩ!', 'Haircut? I’ve cut hair on this corner for thirty years — you’ll look like a pop star!'),
         choices: [
-          { text: L('Cho con xem kiểu tóc', 'Show me the styles'), effect: { type: 'action', id: 'clothes.open', arg: 'barber' } },
-          { text: L('Dạ để bữa khác chú.', 'Another day.') },
+          { text: L('Cho cháu xem kiểu tóc', 'Show me the styles'), effect: { type: 'action', id: 'clothes.open', arg: 'barber' } },
+          { text: L('Dạ để hôm khác chú ạ.', 'Another day.') },
         ],
       },
     },

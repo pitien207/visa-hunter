@@ -88,7 +88,7 @@ function stallShapes(): ShapeItem[] {
   return s
 }
 
-/** The trà đá stall: Bà Sáu sells, Chú Năm and Anh Hai sip and gossip, and one stool is free. */
+/** The trà đá stall: Bà Thu sells, Bác Hùng and Anh Đức sip and gossip, and one stool is free. */
 export function TraDaStall() {
   const shapes = useMemo(stallShapes, [])
   const { seller, jugTable, iceBox, table, chuNam, anhHai, playerSeat, spareStool, umbrella, zone } = TRA_DA

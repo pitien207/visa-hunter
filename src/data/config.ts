@@ -6,7 +6,7 @@
 export type Vec3 = [number, number, number]
 
 export const CONFIG = {
-  version: '1.0.0',
+  version: '1.1.0',
 
   player: {
     /** Metres per second at full joystick / key press. */
@@ -68,6 +68,22 @@ export const CONFIG = {
     sleepIfEnergyBelow: 35,
     /** Minutes a chat with an NPC takes. */
     talkMinutes: 5,
+    /** Day 1 of the story (a Monday): the start of the school year in Hà Nội. */
+    startDate: { year: 2025, month: 9, day: 1 },
+    /** Settings → time speed: multiplier on minutesPerSecond. */
+    speeds: { slow: 0.5, normal: 1, fast: 2 },
+    /** Waiting ("Chờ") fast-forwards this many game minutes per real second. */
+    fastForwardPerSecond: 150,
+    /** You can't wait past this hour — go to bed instead. */
+    waitUntilHourMax: 23.5,
+    /** A nap on your bed. */
+    napMinutes: 60,
+    napEnergy: 15,
+  },
+
+  /** Trung tâm Đức ngữ (Thầy Minh's class) in the lane. */
+  school: {
+    hours: [7, 21] as [number, number],
   },
 
   /** Energy and mood over time. */
@@ -198,8 +214,10 @@ export const CONFIG = {
   weather: {
     /** Chance that a given day is rainy (decided per day, the same on every device). */
     rainChance: { vn: 0.3, de: 0.45 },
-    /** Saigon rain comes as an afternoon shower (hours); German rain lasts all day. */
-    vnShowerHours: [14, 16.5] as [number, number],
+    /** Hà Nội gets a morning drizzle (mưa phùn, hours); German rain lasts all day. */
+    vnShowerHours: [6, 10] as [number, number],
+    /** Mưa phùn is fine and light compared with German rain. */
+    vnRainStrength: 0.55,
     /** Particle counts per quality level. */
     particles: { high: { rain: 1800, petals: 110 }, low: { rain: 800, petals: 45 } },
     /** Phượng/bằng lăng petals drift down in Vietnam during these hours when it's dry. */

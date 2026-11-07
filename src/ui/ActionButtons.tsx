@@ -22,6 +22,8 @@ function isBusy() {
     ui.panel !== null ||
     ui.sleeping ||
     ui.transition !== null ||
+    ui.fastForward !== null ||
+    ui.newDayOpen ||
     useDialogue.getState().npcId !== null ||
     useMinigame.getState().active !== null ||
     useCare.getState().reward !== null
@@ -118,7 +120,7 @@ export function ActionButtons() {
   const cafeWorking = useWork((s) => s.session?.phase === 'working')
   const careWorking = useCareWorking()
   const working = cafeWorking || careWorking
-  const uiBusy = useUI((s) => s.panel !== null || s.sleeping || s.transition !== null)
+  const uiBusy = useUI((s) => s.panel !== null || s.sleeping || s.transition !== null || s.fastForward !== null || s.newDayOpen)
   const talking = useDialogue((s) => s.npcId !== null)
   const playing = useMinigame((s) => s.active !== null)
   const careDone = useCare((s) => s.reward !== null)

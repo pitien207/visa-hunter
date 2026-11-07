@@ -1,5 +1,58 @@
 # Changelog
 
+## 1.1.0 — Hà Nội, class & exam scenes, time and days
+
+The Vietnamese chapter now takes place in Hà Nội's Old Quarter, lessons and exams have their own rooms,
+and the calendar is a real feature.
+
+### Changed — Saigon → Hà Nội
+- **Phố Hàng Gai, Hoàn Kiếm**: "vàng Hà Nội" ochre tube houses with terracotta tiled roofs, panelled wooden
+  folding doors, green shutters, drainpipes and electricity meters, Vietnamese flags (the story starts on
+  Mon 01/09/2025, the eve of National Day), a blue enamel street-name plaque, a parked cyclo (xích lô).
+- **Hồ Gươm** across the far sidewalk: stone embankment with an iron railing, weeping willows, jade water,
+  Tháp Rùa on its islet and the red Thê Húc bridge to Đền Ngọc Sơn. Distant blocks are ochre with tiled roofs.
+- **Chị Lụa's flower bicycle** (xe đạp bán hoa): buy a bunch of cúc họa mi (+mood), ask about the flower seasons.
+- Northern speech everywhere ("cháu", "nhé", "đấy", "cốc", "ngõ", "tắc đường", "mì tôm"…) and northern
+  names: Bà Thu (trà đá), Cô Liên (tạp hóa), Chú Bình (bánh mì), Bác Hùng, Anh Đức, Anh Tú (xe ôm),
+  Chú Thắng (sidewalk barber). The airport is Nội Bài.
+- Café **Cà phê Phố Cổ** now serves **cà phê trứng** (coffee + egg + milk) instead of salt coffee.
+- Weather: Hà Nội gets a light morning drizzle (mưa phùn); petals now include white hoa sữa.
+
+### Added — Scenes for lessons and exams
+- **Trung tâm Đức ngữ** at the end of the lane (open 7–21 h) → **classroom**: raised teacher's platform,
+  chalkboard, "Học, học nữa, học mãi" banner, wooden two-seat desks with classmates, wall fan, a clock that
+  shows the game time. "Học một buổi": class-bell card 🔔 → you sit at your desk → the mini-game on a
+  **chalkboard**.
+- **Exam room**: thi chứng chỉ takes you there (📝 card), you sit at desk SBD 0427 among other candidates,
+  the exam is an **exam sheet** (ruled paper, red margin); afterwards you're taken back to class with the result.
+- **Home interior** (door → "Vào nhà"): bed with a straw mat and mosquito net (sleep, 1-hour nap, save),
+  study desk by the window (self-study in a **vở ô li** squared notebook), family altar, wooden tea set with
+  Bố and your sister, a tear-off calendar showing today's date, the motorbike parked indoors.
+  Passing out now wakes you in your bed (or your WG room in Germany).
+- Every arrival shows a **place plaque** (Hà Nội blue enamel, German street sign, or a wooden room nameplate).
+
+### Added — Time and days
+- HUD clock shows **weekday + date** (01/09 · 1 Sep · 01.09.); tap it for the **clock & calendar panel**:
+  date, "Ngày N of the journey", weather today/tomorrow, **wait** buttons (30′, 1 h, 3 h, until 18:00 — the
+  clock spins forward, capped at 23:30), **time speed** (slow ×0.5 / normal / fast ×2, also in Settings),
+  and **opening hours** of the places in this country with open/closed badges.
+- **New-day card** after sleeping: the date, the day's weather, yesterday's money change, German XP earned and
+  quest steps done, and today's objective. At midnight while awake: a "🌙 new day" note.
+
+### Changed — UI
+- Hà Nội palette: Thê Húc red, Old Quarter shutter green, ochre lines; panels use a faint **gạch bông**
+  (encaustic tile) pattern. Title/loading screens show Hồ Gươm at sunrise instead of Hội An lanterns.
+
+### Manual test checklist (phone)
+- [ ] Title shows Hồ Gươm art and "HÀ NỘI → DEUTSCHLAND"; the street plaque "PHỐ HÀNG GAI" appears on arrival.
+- [ ] Street: ochre houses with wooden doors and flags, Chị Lụa's flower bike on the far sidewalk; turn the camera south to see the lake, willows, Tháp Rùa and the red bridge.
+- [ ] Walk up the lane to the Trung tâm Đức ngữ → **Vào lớp** → classroom; talk to Thầy Minh → enrol → **Học một buổi**: bell card, you sit down, chalkboard quiz.
+- [ ] With enough XP → exam: 📝 card → exam room, you're seated, exam sheet → result → back to class.
+- [ ] Leave class (doormat) → home door → **Vào nhà**: desk → **Tự học** (squared notebook); bed → **Chợp mắt** (clock spins 1 h, +energy); after 18:00 **Đi ngủ** → new-day card.
+- [ ] Tap the clock: date, weather, wait buttons, time speed, opening hours; waiting after 23:30 is refused.
+- [ ] Café: the new **cà phê trứng** order (coffee + egg + milk).
+- [ ] Stay up past midnight: "🌙 Sang ngày mới" note; past 02:00 you wake in your bed.
+
 ## M4–M10 — German, visa, Germany, care work, Pfand & clothes, polish, PWA, deploy setup (1.0.0)
 
 The whole story is now playable: Saigon street → German course A1–B1 → visa → flight → WG and

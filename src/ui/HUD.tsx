@@ -11,6 +11,7 @@ import { ActionIcon } from './ActionIcon'
 import { QuestTracker } from './QuestLog'
 import { BagIcon, BoltIcon, CoinIcon, GearIcon, MoodIcon, MoonIcon, MusicIcon, MusicOffIcon, RainIcon, SunIcon } from './icons'
 import { isRaining } from '../game/systems/weather'
+import { longDate, shortDate } from '../game/systems/calendar'
 import { SCENES } from '../game/scenes/registry'
 import { useWorld } from '../store/worldStore'
 
@@ -43,28 +44,33 @@ function useMoneyGain(money: number) {
   return gain
 }
 
+/** Clock + calendar chip; tap it for the clock panel (wait, schedule, time speed). */
 function Clock() {
   const t = useT()
+  const language = useSettings((s) => s.language)
+  const openPanel = useUI((s) => s.openPanel)
   const minutes = useTime((s) => Math.floor(s.minutes))
   const day = useTime((s) => s.day)
   const hour = minutes / 60
   const daytime = hour >= 6 && hour < 18.5
   const country = useWorld((s) => SCENES[s.scene].country)
   const raining = isRaining(day, minutes, country)
+  const weekday = t(`weekday.${weekdayIndex(day)}` as I18nKey)
   return (
-    <div
-      role="status"
-      aria-label={`${formatClock(minutes)}, ${t(`weekday.${weekdayIndex(day)}` as I18nKey)}`}
-      className="flex items-center gap-1.5 rounded-2xl bg-jade py-1 pr-3 pl-1.5 text-white shadow-[0_3px_0_var(--color-jade-dark)]"
+    <button
+      type="button"
+      onClick={() => openPanel({ type: 'clock' })}
+      aria-label={`${formatClock(minutes)}, ${longDate(day, language)} — ${t('clock.title')}`}
+      className="pointer-events-auto flex items-center gap-1.5 rounded-2xl bg-jade py-1 pr-3 pl-1.5 text-left text-white shadow-[0_3px_0_var(--color-jade-dark)] transition active:translate-y-[3px] active:shadow-none"
     >
       <span className="grid h-7 w-7 place-items-center rounded-full bg-white/20 text-lg">{raining ? <RainIcon /> : daytime ? <SunIcon /> : <MoonIcon />}</span>
       <span className="font-display text-lg leading-none font-extrabold tabular-nums">{formatClock(minutes)}</span>
-      <span className="text-[11px] leading-tight font-bold opacity-90">
-        {t(`weekday.${weekdayIndex(day)}` as I18nKey)}
+      <span className="text-[11px] leading-tight font-bold opacity-95">
+        {weekday}
         <br />
-        {t('hud.day', { day })}
+        <span className="tabular-nums">{shortDate(day, language)}</span>
       </span>
-    </div>
+    </button>
   )
 }
 

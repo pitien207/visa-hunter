@@ -11,6 +11,8 @@ import { MinigameHost } from './game/minigames/MinigameHost'
 import { QuestLog } from './ui/QuestLog'
 import { TransitionOverlay } from './ui/TransitionOverlay'
 import { VisaPanel } from './ui/VisaPanel'
+import { ClockPanel } from './ui/ClockPanel'
+import { FastForwardOverlay, LocationCard, NewDayCard } from './ui/TimeOverlays'
 import { ControlsHint } from './ui/ControlsHint'
 import { DialogueBox } from './ui/DialogueBox'
 import { HUD } from './ui/HUD'
@@ -40,6 +42,7 @@ export default function App() {
       <div className="pointer-events-none absolute inset-0">
         <HUD />
         <ControlsHint />
+        <LocationCard />
         <WorkPanel />
         <CarePanel />
         <Joystick />
@@ -53,9 +56,12 @@ export default function App() {
         <BagPanel />
         <QuestLog />
         <VisaPanel />
+        <ClockPanel />
         <MinigameHost />
         <SettingsPanel />
+        <FastForwardOverlay />
         <SleepOverlay />
+        <NewDayCard />
         <TransitionOverlay />
       </div>
       <LoadingScreen />

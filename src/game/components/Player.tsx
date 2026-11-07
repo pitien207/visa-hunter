@@ -34,7 +34,16 @@ export interface PlayerProps {
 /** Menus, conversations and mini-games own the screen: don't walk behind them. */
 function inputBlocked() {
   const ui = useUI.getState()
-  return ui.settingsOpen || ui.panel !== null || ui.sleeping || ui.transition !== null || useMinigame.getState().active !== null || useDialogue.getState().npcId !== null
+  return (
+    ui.settingsOpen ||
+    ui.panel !== null ||
+    ui.sleeping ||
+    ui.transition !== null ||
+    ui.fastForward !== null ||
+    ui.newDayOpen ||
+    useMinigame.getState().active !== null ||
+    useDialogue.getState().npcId !== null
+  )
 }
 
 function arrive() {

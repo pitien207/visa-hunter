@@ -1,5 +1,6 @@
 import { useMemo } from 'react'
 import { CuboidCollider, RigidBody } from '@react-three/rapier'
+import { PROP_GROUPS } from '../../systems/collisionGroups'
 import { PALETTE as P } from '../shared/palette'
 import { barrierShapes, coneShapes, place } from '../shared/props'
 import { Shapes, type ShapeItem } from '../shared/Shapes'
@@ -42,7 +43,7 @@ export function Boundaries() {
     // Hedges along the west, south and east edges (gaps where the roads pass)
     s.push(...hedge([minX - 0.35, -4.2], [minX - 0.35, ROAD.minZ - 0.4]))
     s.push(...hedge([minX - 0.35, ROAD.maxZ + 0.4], [minX - 0.35, maxZ + 0.35]))
-    s.push(...hedge([minX - 0.35, maxZ + 0.35], [maxX + 0.35, maxZ + 0.35]))
+    // (the south edge is Hồ Gươm's railing, see HoGuom.tsx)
     s.push(...hedge([maxX + 0.35, ROAD.maxZ + 0.4], [maxX + 0.35, maxZ + 0.35]))
     s.push(...hedge([maxX + 0.35, minZ], [maxX + 0.35, ROAD.minZ - 0.4]))
 
@@ -68,10 +69,10 @@ export function Boundaries() {
     <>
       <Shapes shapes={shapes} />
       <RigidBody type="fixed" colliders={false}>
-        <CuboidCollider args={[T, WALL_H, halfD]} position={[minX - T, WALL_H, cz]} />
-        <CuboidCollider args={[T, WALL_H, halfD]} position={[maxX + T, WALL_H, cz]} />
-        <CuboidCollider args={[halfW, WALL_H, T]} position={[cx, WALL_H, minZ - T]} />
-        <CuboidCollider args={[halfW, WALL_H, T]} position={[cx, WALL_H, maxZ + T]} />
+        <CuboidCollider args={[T, WALL_H, halfD]} position={[minX - T, WALL_H, cz]} collisionGroups={PROP_GROUPS} />
+        <CuboidCollider args={[T, WALL_H, halfD]} position={[maxX + T, WALL_H, cz]} collisionGroups={PROP_GROUPS} />
+        <CuboidCollider args={[halfW, WALL_H, T]} position={[cx, WALL_H, minZ - T]} collisionGroups={PROP_GROUPS} />
+        <CuboidCollider args={[halfW, WALL_H, T]} position={[cx, WALL_H, maxZ + T]} collisionGroups={PROP_GROUPS} />
       </RigidBody>
     </>
   )

@@ -184,8 +184,8 @@ function bulbShapes(): ShapeItem[] {
 function useCafeTextures() {
   const textures = useMemo(() => {
     const sign = makeSignTexture({
-      title: 'CÀ PHÊ',
-      subtitle: 'Sữa đá · Bạc xỉu · Muối',
+      title: 'CÀ PHÊ PHỐ CỔ',
+      subtitle: 'Cà phê trứng · Nâu đá · Bạc xỉu',
       background: P.white,
       border: P.coral,
       color: '#7a4e3a',

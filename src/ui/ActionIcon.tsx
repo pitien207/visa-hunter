@@ -62,15 +62,13 @@ function IceIcon(props: Props) {
 }
 
 /** Salt shaker. */
-function SaltIcon(props: Props) {
+/** An egg with a whisked-yolk swirl (cà phê trứng). */
+function EggIcon(props: Props) {
   return (
     <Base {...props}>
-      <path d="M10 12h12l1.5 14a2 2 0 0 1-2 2.2h-11a2 2 0 0 1-2-2.2z" fill="#ffffff" stroke={INK} strokeWidth="2" />
-      <path d="M11 12c0-4 2-7 5-7s5 3 5 7" fill="#cdb8f0" stroke={INK} strokeWidth="2" />
-      <circle cx="14" cy="8.5" r="0.9" fill={INK} />
-      <circle cx="18" cy="8.5" r="0.9" fill={INK} />
-      <circle cx="16" cy="6.8" r="0.9" fill={INK} />
-      <path d="M12 19h8" stroke="#ff9fb2" strokeWidth="2.4" />
+      <path d="M16 4c5 0 9 8 9 14a9 9 0 0 1-18 0c0-6 4-14 9-14z" fill="#fff8ec" stroke={INK} strokeWidth="2" />
+      <circle cx="16" cy="19" r="4.6" fill="#ffc94d" stroke="#e8a21f" strokeWidth="1.4" />
+      <path d="M13.6 18.2c1-1.6 3.6-1.6 4.4.2" stroke="#fff3c4" strokeWidth="1.4" fill="none" strokeLinecap="round" />
     </Base>
   )
 }
@@ -279,7 +277,7 @@ const ICONS: Record<ActionIconName, (props: Props) => JSX.Element> = {
   coffee: CoffeeIcon,
   milk: MilkIcon,
   ice: IceIcon,
-  salt: SaltIcon,
+  egg: EggIcon,
   talk: TalkIcon,
   shop: ShopIcon,
   sleep: SleepIcon,

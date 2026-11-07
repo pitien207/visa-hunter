@@ -8,7 +8,10 @@ import { useTime } from '../../store/timeStore'
 import { pushToast } from '../../store/toastStore'
 import { useWorld } from '../../store/worldStore'
 import { playSfx } from './audio'
-import { check, getFlag, setFlag } from './conditions'
+import { bumpFlag, check, flagNumber, getFlag, setFlag } from './conditions'
+import { useUI } from '../../store/uiStore'
+import { useSettings } from '../../store/settingsStore'
+import { shortDate } from './calendar'
 import { chargeRent } from './germany'
 
 /**
@@ -63,6 +66,7 @@ function evaluate() {
       for (const s of q.steps) {
         if (stepDone(s.id) || !check(s.done)) continue
         setFlag(stepFlag(s.id), true)
+        bumpFlag('log.steps')
         if (visible) pushToast('toast.stepDone', 'good', { step: localize(s.text, currentLanguage()) })
       }
       if (visible && !wasComplete && questComplete(q)) {
@@ -80,6 +84,33 @@ function evaluate() {
   } finally {
     busy = false
   }
+}
+
+/** Remember where the day started, for tomorrow's summary card. */
+function snapshotDay(day: number) {
+  const p = usePlayer.getState()
+  setFlag('log.day', day)
+  setFlag('log.money', p.money)
+  setFlag('log.cur', p.currency)
+  setFlag('log.germanXp', 0)
+  setFlag('log.steps', 0)
+}
+
+/** The day rolled over (midnight or sleep): prepare yesterday's summary. */
+function closeDay(day: number) {
+  const p = usePlayer.getState()
+  const sameCurrency = getFlag('log.cur') === p.currency
+  useUI.getState().setDaySummary({
+    day,
+    money: sameCurrency ? Math.round((p.money - flagNumber('log.money')) * 100) / 100 : 0,
+    currency: p.currency,
+    germanXp: flagNumber('log.germanXp'),
+    steps: flagNumber('log.steps'),
+    passedOut: false,
+  })
+  snapshotDay(day)
+  // Still up at midnight: a quiet note instead of the full card.
+  if (!useUI.getState().sleeping) pushToast('toast.midnight', 'info', { date: shortDate(day, useSettings.getState().language) })
 }
 
 /** A random morning event, at most once per day. */
@@ -113,12 +144,14 @@ export function startWatchers(): () => void {
     useTime.subscribe((s) => {
       if (s.day !== lastDay) {
         lastDay = s.day
+        closeDay(s.day)
         chargeRent()
         morningEvent(s.day)
       }
       schedule()
     }),
   ]
+  if (getFlag('log.day') === undefined) snapshotDay(useTime.getState().day)
   // Quietly mark anything already true at startup (no toasts for loaded progress).
   for (const q of QUESTS) for (const s of q.steps) if (!stepDone(s.id) && check(s.done)) setFlag(stepFlag(s.id), true)
   for (const a of ACHIEVEMENTS) if (!getFlag(`achv.got.${a.id}`) && check(a.when)) setFlag(`achv.got.${a.id}`, true)

@@ -98,7 +98,8 @@ const petalFragment = /* glsl */ `
   }
 `
 
-const PETAL_COLORS = ['#ff6b5e', '#ff8a5c', '#f25f6b', '#b48fe0', '#c9a4f0'].map((c) => new Color(c))
+// Red phượng, purple bằng lăng and creamy-white hoa sữa — Hà Nội's street trees
+const PETAL_COLORS = ['#ff6b5e', '#fff6dc', '#b48fe0', '#f25f6b', '#fffaf0', '#c9a4f0'].map((c) => new Color(c))
 
 function seeds(count: number, perItem: number) {
   const seed = new Float32Array(count * perItem * 3)

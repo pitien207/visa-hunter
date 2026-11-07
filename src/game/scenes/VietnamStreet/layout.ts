@@ -61,7 +61,6 @@ export const TREES: { at: Vec3; variant: TreeVariant; scale?: number }[] = [
   { at: [6.4, 0, 2.3], variant: 'green' },
   { at: [-13, 0, -3.4], variant: 'blossom', scale: 0.8 },
   { at: [9.45, 0, -3.6], variant: 'green', scale: 0.9 },
-  { at: [-1.2, 0, -12], variant: 'blossom', scale: 0.75 },
   { at: [-11, 0, 10.4], variant: 'green' },
   { at: [-4, 0, 10.4], variant: 'blossom' },
   { at: [3.2, 0, 10.4], variant: 'green' },
@@ -75,8 +74,6 @@ export const PLANTS: Vec3[] = [
   [1.4, 0, -4.0],
   [7.6, 0, -4.0],
   [0.5, 0, -8.0],
-  [0.5, 0, -10.8],
-  [-2.8, 0, -12.4],
 ]
 
 export const MOTORBIKES: { at: Vec3; rotY: number; color: string }[] = [
@@ -143,7 +140,7 @@ export const TRA_DA = {
   zone: { x: -1.25, z: -2.3, halfX: 1.75, halfZ: 1.6 } as ZoneXZ,
 }
 
-/** Cô Ba's grocery in the neighbour's ground floor. */
+/** Cô Liên's grocery in the neighbour's ground floor. */
 export const GROCERY = {
   coBa: { x: -11.35, z: -3.7 },
   zone: { x: NEIGHBOR.x, z: BUILDING_FRONT_Z + 1.05, halfX: 2.1, halfZ: 1.15 } as ZoneXZ,

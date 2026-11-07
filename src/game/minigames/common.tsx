@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState, type ReactNode } from 'react'
+import { createContext, useContext, useEffect, useRef, useState, type ReactNode } from 'react'
 import { useT } from '../../i18n'
 import type { MinigameResult } from '../../store/minigameStore'
 
@@ -55,6 +55,20 @@ export const ARTICLE_STYLE: Record<string, string> = {
   das: 'bg-jade text-white shadow-[0_4px_0_var(--color-jade-dark)]',
 }
 
+/**
+ * Where the mini-game happens changes its look: a chalkboard in Thầy Minh's class,
+ * an exam sheet in the exam room, a squared school notebook (vở ô li) at home.
+ */
+export type MinigameTheme = 'paper' | 'chalk' | 'exam' | 'notebook'
+export const MinigameThemeContext = createContext<MinigameTheme>('paper')
+
+const FRAME: Record<MinigameTheme, { backdrop: string; section: string }> = {
+  paper: { backdrop: 'bg-ink/40 backdrop-blur-sm', section: 'panel text-ink' },
+  chalk: { backdrop: 'bg-ink/25', section: 'chalkboard mg-chalk rounded-3xl text-[#f4f1e6]' },
+  exam: { backdrop: 'bg-ink/30', section: 'exam-paper rounded-2xl text-ink' },
+  notebook: { backdrop: 'bg-ink/30', section: 'notebook-paper rounded-2xl text-ink' },
+}
+
 export function MinigameFrame({
   title,
   step,
@@ -69,19 +83,28 @@ export function MinigameFrame({
   timer?: number
   children: ReactNode
 }) {
+  const theme = useContext(MinigameThemeContext)
+  const t = useT()
+  const look = FRAME[theme]
   return (
-    <div className="pointer-events-auto absolute inset-0 z-40 flex items-center justify-center bg-ink/40 p-3 backdrop-blur-sm">
-      <section className="panel animate-sheet relative flex max-h-[94dvh] w-full max-w-md flex-col p-4 pt-7 text-ink" role="dialog" aria-modal="true" aria-label={title}>
+    <div className={`pointer-events-auto absolute inset-0 z-40 flex items-center justify-center p-3 ${look.backdrop}`}>
+      <section className={`animate-sheet relative flex max-h-[94dvh] w-full max-w-md flex-col p-4 pt-7 ${look.section}`} role="dialog" aria-modal="true" aria-label={title}>
         <h2 className="absolute -top-4 left-1/2 max-w-[90%] -translate-x-1/2 truncate rounded-full ribbon px-5 py-1 text-lg whitespace-nowrap">{title}</h2>
+        {theme === 'exam' && (
+          <p className="mb-2 flex justify-between border-b-2 border-dashed border-ink/25 pb-1 text-[11px] font-black text-ink/70 uppercase">
+            <span>{t('mg.examSheet')}</span>
+            <span className="tabular-nums">SBD 0427</span>
+          </p>
+        )}
         {step !== undefined && total !== undefined && (
           <div className="mb-2 flex justify-center gap-1">
             {Array.from({ length: total }, (_, i) => (
-              <span key={i} className={`h-2 w-5 rounded-full ${i < step ? 'bg-jade' : i === step ? 'bg-gold' : 'bg-ink/15'}`} />
+              <span key={i} className={`h-2 w-5 rounded-full ${i < step ? 'bg-jade' : i === step ? 'bg-gold' : theme === 'chalk' ? 'bg-white/25' : 'bg-ink/15'}`} />
             ))}
           </div>
         )}
         {timer !== undefined && (
-          <div className="mb-3 h-2 overflow-hidden rounded-full bg-ink/10">
+          <div className={`mb-3 h-2 overflow-hidden rounded-full ${theme === 'chalk' ? 'bg-white/15' : 'bg-ink/10'}`}>
             <div
               className={`h-full rounded-full ${timer > 0.5 ? 'bg-jade' : timer > 0.25 ? 'bg-gold' : 'bg-lacquer'}`}
               style={{ width: `${Math.max(0, timer) * 100}%` }}
@@ -112,7 +135,7 @@ export function ResultView({
     <MinigameFrame title={title}>
       <div className="flex flex-col items-center gap-2 py-2 text-center">
         <div className="text-5xl">{result.perfect ? '🌟' : result.passed ? '🎉' : '💪'}</div>
-        <p className="font-display text-2xl font-extrabold text-lacquer">
+        <p className="mg-heading font-display text-2xl font-extrabold text-lacquer">
           {result.perfect ? t('mg.perfect') : result.passed ? t('mg.passed') : t('mg.failed')}
         </p>
         <p className="font-bold">{t('mg.score', { correct: result.correct, total: result.total })}</p>
@@ -142,8 +165,13 @@ export function AnswerButton({
   onClick: () => void
   disabled?: boolean
 }) {
+  const chalk = useContext(MinigameThemeContext) === 'chalk'
   const style =
-    state === 'right'
+    chalk && state === 'idle'
+      ? 'bg-white/10 text-[#f4f1e6] shadow-[inset_0_0_0_2px_rgba(244,241,230,0.6)]'
+      : chalk && state === 'dim'
+        ? 'bg-white/5 text-[#f4f1e6]/40 shadow-[inset_0_0_0_2px_rgba(244,241,230,0.2)]'
+        : state === 'right'
       ? 'bg-jade text-white shadow-[0_4px_0_var(--color-jade-dark)]'
       : state === 'wrong'
         ? 'bg-lacquer text-gold-light shadow-[0_4px_0_var(--color-lacquer-dark)]'

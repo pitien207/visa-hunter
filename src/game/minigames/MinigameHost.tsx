@@ -1,9 +1,10 @@
-import { useState } from 'react'
+import { useState, type ReactNode } from 'react'
 import { CONFIG } from '../../data/config'
 import { useT } from '../../i18n'
 import { makeResult, useMinigame, type MinigameResult } from '../../store/minigameStore'
+import { useWorld } from '../../store/worldStore'
 import { playSfx } from '../systems/audio'
-import { ResultView } from './common'
+import { MinigameThemeContext, ResultView, type MinigameTheme } from './common'
 import { DerDieDas } from './DerDieDas'
 import { Exam } from './Exam'
 import { QaGame } from './QaGame'
@@ -16,12 +17,13 @@ export function MinigameHost() {
   const t = useT()
   const active = useMinigame((s) => s.active)
   const finish = useMinigame((s) => s.finish)
+  const scene = useWorld((s) => s.scene)
   const [result, setResult] = useState<{ id: number; result: MinigameResult; title: string } | null>(null)
 
   if (!active) return null
-  if (result && result.id === active.id) {
-    return <ResultView title={result.title} result={result.result} onContinue={() => finish(result.result)} />
-  }
+
+  // The look follows the place: chalkboard in class, exam sheet, school notebook at home.
+  const theme: MinigameTheme = active.kind === 'exam' ? 'exam' : scene === 'classroom' ? 'chalk' : scene === 'home' ? 'notebook' : 'paper'
 
   const complete = (title: string, passScore: number, skipResult = false) => (correct: number, total: number, extra?: number) => {
     const r = makeResult(correct, total, passScore)
@@ -31,26 +33,38 @@ export function MinigameHost() {
     else setResult({ id: active.id, result: r, title })
   }
 
-  switch (active.kind) {
-    case 'vocab': {
-      const title = t('mg.vocabTitle')
-      return <VocabQuiz key={active.id} level={active.level} count={active.count} title={title} onComplete={complete(title, 0.5)} />
+  let game: ReactNode = null
+  if (result && result.id === active.id) {
+    game = <ResultView title={result.title} result={result.result} onContinue={() => finish(result.result)} />
+  } else {
+    switch (active.kind) {
+      case 'vocab': {
+        const title = t('mg.vocabTitle')
+        game = <VocabQuiz key={active.id} level={active.level} count={active.count} title={title} onComplete={complete(title, 0.5)} />
+        break
+      }
+      case 'derdiedas': {
+        const title = t('mg.derdiedasTitle')
+        game = <DerDieDas key={active.id} level={active.level} count={active.count} title={title} onComplete={complete(title, 0.5)} />
+        break
+      }
+      case 'sentence': {
+        const title = t('mg.sentenceTitle')
+        game = <SentenceBuilder key={active.id} level={active.level} count={active.count} title={title} onComplete={complete(title, 0.5)} />
+        break
+      }
+      case 'exam': {
+        const title = t('mg.examTitle', { level: CONFIG.german.levels[active.level]?.name ?? '' })
+        game = <Exam key={active.id} level={active.level} onComplete={complete(title, CONFIG.german.examPassScore)} />
+        break
+      }
+      case 'termin':
+        game = <TerminHunt key={active.id} title={t('mg.terminTitle')} onComplete={complete(t('mg.terminTitle'), 1, true)} />
+        break
+      case 'qa':
+        game = <QaGame key={active.id} set={active.set} count={active.count} onComplete={complete('', active.passScore, true)} />
+        break
     }
-    case 'derdiedas': {
-      const title = t('mg.derdiedasTitle')
-      return <DerDieDas key={active.id} level={active.level} count={active.count} title={title} onComplete={complete(title, 0.5)} />
-    }
-    case 'sentence': {
-      const title = t('mg.sentenceTitle')
-      return <SentenceBuilder key={active.id} level={active.level} count={active.count} title={title} onComplete={complete(title, 0.5)} />
-    }
-    case 'exam': {
-      const title = t('mg.examTitle', { level: CONFIG.german.levels[active.level]?.name ?? '' })
-      return <Exam key={active.id} level={active.level} onComplete={complete(title, CONFIG.german.examPassScore)} />
-    }
-    case 'termin':
-      return <TerminHunt key={active.id} title={t('mg.terminTitle')} onComplete={complete(t('mg.terminTitle'), 1, true)} />
-    case 'qa':
-      return <QaGame key={active.id} set={active.set} count={active.count} onComplete={complete('', active.passScore, true)} />
   }
+  return <MinigameThemeContext.Provider value={theme}>{game}</MinigameThemeContext.Provider>
 }

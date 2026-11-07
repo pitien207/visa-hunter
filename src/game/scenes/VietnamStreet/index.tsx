@@ -2,6 +2,7 @@ import { memo } from 'react'
 import { PALETTE as P } from '../shared/palette'
 import { PowerLines } from '../shared/PowerLines'
 import { Backdrop } from './Backdrop'
+import { HoGuom } from './HoGuom'
 import { Boundaries } from './Boundaries'
 import { Cafe } from './Cafe'
 import { CafeJob } from './CafeJob'
@@ -22,17 +23,18 @@ import { StreetProps } from './StreetProps'
 import type { SignOptions } from '../shared/textures'
 import { TubeHouse, type HousePalette } from './TubeHouse'
 
+/** "Vàng Hà Nội": ochre walls, green wooden shutters, dark green ironwork. */
 const HOME_PALETTE: HousePalette = {
-  wall: '#ffe3a3',
-  trim: P.white,
-  shutter: '#8fd3c1',
-  railing: '#5f9e8f',
-  accent: P.coral,
+  wall: '#f2c46d',
+  trim: '#fff3d6',
+  shutter: '#3f7d5c',
+  railing: '#2c5c43',
+  accent: '#c8322b',
 }
 
 const GROCERY_SIGN: SignOptions = {
-  title: 'TẠP HÓA CÔ BA',
-  subtitle: 'Bia · Nước ngọt · Mì gói · Bánh kẹo',
+  title: 'TẠP HÓA CÔ LIÊN',
+  subtitle: 'Bia · Nước ngọt · Mì tôm · Bánh kẹo',
   background: '#d4473b',
   border: '#f4c04e',
   color: '#ffe08a',
@@ -41,12 +43,15 @@ const GROCERY_SIGN: SignOptions = {
 }
 
 const NEIGHBOR_PALETTE: HousePalette = {
-  wall: '#ffc9d2',
+  wall: '#f4dfae',
   trim: P.cream,
-  shutter: '#a9c8f5',
-  railing: '#7b8fc4',
+  shutter: '#4f8a8b',
+  railing: '#2f5f60',
   accent: P.butter,
 }
+
+/** Distant Old Quarter blocks: ochre, cream and faded pastel walls under tiled roofs. */
+const HANOI_BACKDROP = ['#f2c46d', '#f4dfae', '#e8b04a', '#f6e7c4', '#d9c6a1', '#f0b9a0', '#cfe0c8']
 
 /**
  * Chapter 1 hub: a Vietnamese street corner with the family tube house and a café.
@@ -62,7 +67,8 @@ export const VietnamStreet = memo(function VietnamStreet() {
         depth={BUILDING_DEPTH}
         floors={HOME.floors}
         palette={HOME_PALETTE}
-        roofTank
+        oldQuarter
+        flag
         bougainvillea
         airCon
       />
@@ -72,6 +78,8 @@ export const VietnamStreet = memo(function VietnamStreet() {
         depth={BUILDING_DEPTH}
         floors={NEIGHBOR.floors}
         palette={NEIGHBOR_PALETTE}
+        oldQuarter
+        flag
         roofTank
         airCon
         grocery
@@ -84,7 +92,8 @@ export const VietnamStreet = memo(function VietnamStreet() {
       <StoryPlaces />
       <PowerLines poles={POLES} spans={POLE_SPANS} drops={POLE_DROPS} />
       <Boundaries />
-      <Backdrop />
+      <HoGuom />
+      <Backdrop lake colors={HANOI_BACKDROP} roof="#c8653d" />
     </group>
   )
 })

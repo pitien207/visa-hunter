@@ -20,8 +20,8 @@ const A = (id: string, icon: string, vi: string, en: string, dVi: string, dEn: s
 })
 
 export const ACHIEVEMENTS: AchievementDef[] = [
-  A('barista', '☕', 'Barista tập sự', 'Apprentice barista', 'Phục vụ 20 ly cà phê', 'Serve 20 drinks', { flag: 'stats.served', atLeast: 20 }),
-  A('traDa', '🧊', 'Chiến hữu trà đá', 'Iced-tea comrade', 'Uống 5 ly trà đá với Bà Sáu', 'Drink 5 iced teas at Granny Sau’s', { flag: 'stats.traDa', atLeast: 5 }),
+  A('barista', '☕', 'Barista tập sự', 'Apprentice barista', 'Phục vụ 20 cốc cà phê', 'Serve 20 drinks', { flag: 'stats.served', atLeast: 20 }),
+  A('traDa', '🧊', 'Chiến hữu trà đá', 'Iced-tea comrade', 'Uống 5 cốc trà đá với Bà Thu', 'Drink 5 iced teas at Granny Thu’s', { flag: 'stats.traDa', atLeast: 5 }),
   A('derdiedas', '🎯', 'Der, die, das? Dễ!', 'Der, die, das? Easy!', 'Một bài học không sai câu nào', 'A lesson without a single mistake', { flag: 'stats.perfectLessons', atLeast: 1 }),
   A('b1', '🎓', 'B1 rồi nè!', 'B1 achieved!', 'Thi đậu chứng chỉ B1', 'Pass the B1 exam', { germanLevel: 3 }),
   A('terminHunter', '📅', 'Termin Hunter', 'Termin Hunter', 'Săn được Termin ngay lần đầu tiên', 'Get a Termin on your very first try', { flag: 'achv.terminFirstTry' }),

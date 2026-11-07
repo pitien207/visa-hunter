@@ -1,9 +1,9 @@
 @import 'tailwindcss';
 
 /*
- * Visual language: warm "giấy dó" paper panels with a faint flower pattern, lacquer red
- * (sơn mài) + gold for primary actions, jade green for secondary ones — the colours
- * of Tết decorations, Hội An lanterns and old shop signs.
+ * Visual language — Hà Nội: warm "giấy dó" paper panels with a faint gạch bông (encaustic
+ * tile) pattern, Thê Húc-bridge red + gold for primary actions, the green of Old Quarter
+ * wooden shutters for secondary ones, ochre "vàng Hà Nội" for lines and accents.
  */
 @theme {
   --font-sans: 'Nunito', ui-rounded, 'Segoe UI', system-ui, sans-serif;
@@ -12,13 +12,15 @@
   --color-ink: #5b4636;
   --color-cream: #fffaf2;
   --color-paper: #fff6e3;
-  --color-paper-line: #efd3a0;
-  --color-lacquer: #d4473b;
-  --color-lacquer-dark: #9e2f27;
+  --color-paper-line: #e8c27a;
+  --color-lacquer: #c8322b;
+  --color-lacquer-dark: #922219;
   --color-gold: #f4c04e;
   --color-gold-light: #ffe6a6;
-  --color-jade: #2f8c7f;
-  --color-jade-dark: #1f655c;
+  --color-jade: #3f7d5c;
+  --color-jade-dark: #2c5c43;
+  --color-ochre: #e8b04a;
+  --color-hanoi-blue: #2c5aa0;
   --color-peach: #ffc3a0;
   --color-mint: #a8e6cf;
   --color-sky: #bfe3ff;
@@ -33,6 +35,7 @@
   --animate-bubble: bubble 0.25s cubic-bezier(0.34, 1.56, 0.64, 1) both;
   --animate-sheet: sheet 0.3s cubic-bezier(0.22, 1, 0.36, 1) both;
   --animate-nudge: nudge 1s ease-in-out infinite;
+  --animate-plaque: plaque 3.2s ease-out both;
 
   @keyframes pop {
     from {
@@ -116,6 +119,21 @@
       opacity: 1;
     }
   }
+  @keyframes plaque {
+    0% {
+      transform: translateY(-12px) scale(0.9);
+      opacity: 0;
+    }
+    10%,
+    80% {
+      transform: translateY(0) scale(1);
+      opacity: 1;
+    }
+    100% {
+      transform: translateY(-6px);
+      opacity: 0;
+    }
+  }
   @keyframes nudge {
     0%,
     100% {
@@ -137,9 +155,10 @@
 }
 
 /* Paper panel with a thin gold inner line and a faint four-petal flower pattern. */
+/* Paper panel with an ochre inner line and a faint gạch bông (encaustic tile) pattern. */
 @utility panel {
   background-color: var(--color-paper);
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='28' height='28' viewBox='0 0 28 28'%3E%3Cg fill='%23f3dfbd' fill-opacity='0.55'%3E%3Ccircle cx='14' cy='10.5' r='2.2'/%3E%3Ccircle cx='14' cy='17.5' r='2.2'/%3E%3Ccircle cx='10.5' cy='14' r='2.2'/%3E%3Ccircle cx='17.5' cy='14' r='2.2'/%3E%3C/g%3E%3Ccircle cx='14' cy='14' r='1.3' fill='%23f0c87a' fill-opacity='0.6'/%3E%3C/svg%3E");
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='36' height='36' viewBox='0 0 36 36'%3E%3Cg fill='none' stroke='%23ecd2a0' stroke-opacity='0.75' stroke-width='1.1'%3E%3Cpath d='M18 5 31 18 18 31 5 18Z'/%3E%3Ccircle cx='18' cy='18' r='4.5'/%3E%3Cpath d='M18 9c3 3 3 6 0 9-3-3-3-6 0-9ZM18 27c3-3 3-6 0-9-3 3-3 6 0 9ZM9 18c3-3 6-3 9 0-3 3-6 3-9 0ZM27 18c-3-3-6-3-9 0 3 3 6 3 9 0Z'/%3E%3C/g%3E%3Cg fill='%23f0c87a' fill-opacity='0.3'%3E%3Ccircle cx='0' cy='0' r='3.5'/%3E%3Ccircle cx='36' cy='0' r='3.5'/%3E%3Ccircle cx='0' cy='36' r='3.5'/%3E%3Ccircle cx='36' cy='36' r='3.5'/%3E%3C/g%3E%3C/svg%3E");
   border-radius: 1.5rem;
   box-shadow:
     inset 0 0 0 3px var(--color-paper),
@@ -155,6 +174,73 @@
     inset 0 0 0 2px #f1dcb6,
     0 3px 0 rgba(91, 70, 54, 0.22);
   backdrop-filter: blur(6px);
+}
+
+/* Hà Nội's blue enamel street-name plaque (white inner border). */
+@utility plaque-hanoi {
+  background-color: var(--color-hanoi-blue);
+  color: #ffffff;
+  border-radius: 0.6rem;
+  box-shadow:
+    inset 0 0 0 3px var(--color-hanoi-blue),
+    inset 0 0 0 5px #ffffff,
+    0 4px 0 rgba(22, 44, 84, 0.35);
+}
+
+/* German street sign: white plate, black border. */
+@utility plaque-german {
+  background-color: #ffffff;
+  color: #1e1e22;
+  border-radius: 0.3rem;
+  box-shadow:
+    inset 0 0 0 3px #1e1e22,
+    0 4px 0 rgba(0, 0, 0, 0.2);
+}
+
+/* Room nameplate: polished wood with a brass edge. */
+@utility plaque-room {
+  background-color: #9a6a43;
+  color: #fff3d6;
+  border-radius: 0.8rem;
+  box-shadow:
+    inset 0 0 0 2px #e8c27a,
+    0 4px 0 #74502f;
+}
+
+/* Classroom chalkboard in a wooden frame (lessons, the class bell card). */
+@utility chalkboard {
+  background-color: #2f5243;
+  background-image:
+    radial-gradient(ellipse at 20% 30%, rgba(255, 255, 255, 0.07), transparent 55%),
+    radial-gradient(ellipse at 80% 75%, rgba(255, 255, 255, 0.05), transparent 50%);
+  box-shadow:
+    inset 0 0 0 6px #9a6a43,
+    inset 0 0 0 8px #74502f,
+    0 6px 0 rgba(0, 0, 0, 0.25);
+}
+
+/* Exam sheet: ruled lines and a red margin. */
+@utility exam-paper {
+  background-color: #ffffff;
+  background-image:
+    linear-gradient(90deg, transparent 22px, rgba(200, 50, 43, 0.45) 22px, rgba(200, 50, 43, 0.45) 24px, transparent 24px),
+    repeating-linear-gradient(180deg, transparent 0 27px, rgba(79, 134, 217, 0.22) 27px 28px);
+  box-shadow:
+    inset 0 0 0 2px #e3e8ef,
+    0 6px 0 rgba(91, 70, 54, 0.22);
+}
+
+/* Vietnamese school notebook (vở ô li): small squares, every fourth line darker, red margin. */
+@utility notebook-paper {
+  background-color: #fffdf6;
+  background-image:
+    linear-gradient(90deg, transparent 26px, rgba(200, 50, 43, 0.5) 26px, rgba(200, 50, 43, 0.5) 27.5px, transparent 27.5px),
+    repeating-linear-gradient(180deg, transparent 0 31px, rgba(110, 90, 200, 0.28) 31px 32px),
+    repeating-linear-gradient(180deg, transparent 0 7px, rgba(110, 90, 200, 0.12) 7px 8px),
+    repeating-linear-gradient(90deg, transparent 0 31px, rgba(110, 90, 200, 0.2) 31px 32px);
+  box-shadow:
+    inset 0 0 0 2px #e6def7,
+    0 6px 0 rgba(91, 70, 54, 0.22);
 }
 
 /* Lacquer-red button with gold lettering (Tết / lì xì colours). */
@@ -225,4 +311,15 @@ textarea {
   -webkit-user-select: text;
   user-select: text;
   touch-action: auto;
+}
+
+/* On the chalkboard, the usual "ink" text colours become chalk. */
+.mg-chalk .text-ink\/50,
+.mg-chalk .text-ink\/60,
+.mg-chalk .text-ink\/70,
+.mg-chalk .text-ink\/75 {
+  color: rgb(244 241 230 / 0.78);
+}
+.mg-chalk .mg-heading {
+  color: #ffe08a;
 }

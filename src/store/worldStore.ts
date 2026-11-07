@@ -1,6 +1,6 @@
 import { create } from 'zustand'
 
-export type SceneId = 'vietnam' | 'embassy' | 'airport' | 'germany' | 'buergeramt' | 'wg' | 'careHome'
+export type SceneId = 'vietnam' | 'home' | 'classroom' | 'examHall' | 'embassy' | 'airport' | 'germany' | 'buergeramt' | 'wg' | 'careHome'
 
 interface WorldState {
   scene: SceneId

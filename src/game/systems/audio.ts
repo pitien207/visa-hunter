@@ -7,7 +7,7 @@ import { useSettings } from '../../store/settingsStore'
  * (browser autoplay rules).
  */
 
-export type SfxName = 'click' | 'right' | 'wrong' | 'coin' | 'pickup' | 'success' | 'fail' | 'honk' | 'door' | 'stamp' | 'sip'
+export type SfxName = 'click' | 'right' | 'wrong' | 'coin' | 'pickup' | 'success' | 'fail' | 'honk' | 'door' | 'stamp' | 'sip' | 'bell'
 export type MusicTheme = 'vn' | 'de' | 'indoor' | null
 
 let ctx: AudioContext | null = null
@@ -140,6 +140,11 @@ export function playSfx(name: SfxName) {
     case 'door':
       noise(t, 0.25, 0.5, 600)
       tone(140, t, 0.2, 'sine', 0.3, b)
+      break
+    case 'bell':
+      // School bell: "reng reng reng"
+      for (let i = 0; i < 10; i++) tone(i % 2 ? 1568 : 1760, t + i * 0.055, 0.07, 'square', 0.12, b)
+      for (let i = 0; i < 10; i++) tone(i % 2 ? 1568 : 1760, t + 0.75 + i * 0.055, 0.07, 'square', 0.12, b)
       break
     case 'stamp':
       tone(90, t, 0.25, 'sine', 0.6, b)

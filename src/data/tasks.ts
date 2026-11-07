@@ -16,7 +16,7 @@ export type ActionIconName =
   | 'coffee'
   | 'milk'
   | 'ice'
-  | 'salt'
+  | 'egg'
   | 'talk'
   | 'shop'
   | 'sleep'
@@ -74,14 +74,14 @@ export const TASKS = {
       { id: 'coffee', labelKey: 'action.coffee', icon: 'coffee', color: '#6b4226' },
       { id: 'milk', labelKey: 'action.milk', icon: 'milk', color: '#f6e4c0' },
       { id: 'ice', labelKey: 'action.ice', icon: 'ice', color: '#c9ecff' },
-      { id: 'salt', labelKey: 'action.salt', icon: 'salt', color: '#ffffff' },
+      { id: 'egg', labelKey: 'action.egg', icon: 'egg', color: '#ffe7a3' },
     ],
     requests: [
       { id: 'den-da', labelKey: 'drink.denDa', needs: ['coffee', 'ice'] },
       { id: 'nau-nong', labelKey: 'drink.nauNong', needs: ['coffee', 'milk'] },
       { id: 'sua-da', labelKey: 'drink.suaDa', needs: ['coffee', 'milk', 'ice'], weight: 2 },
       { id: 'bac-xiu', labelKey: 'drink.bacXiu', needs: ['milk', 'milk', 'coffee', 'ice'] },
-      { id: 'muoi', labelKey: 'drink.muoi', needs: ['coffee', 'milk', 'salt', 'ice'] },
+      { id: 'trung', labelKey: 'drink.trung', needs: ['coffee', 'egg', 'milk'], weight: 2 },
     ],
   },
 } satisfies Record<string, TaskDef>

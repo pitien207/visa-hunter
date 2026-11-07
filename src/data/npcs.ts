@@ -61,34 +61,34 @@ export interface NpcDef {
 export const NPCS = {
   baSau: {
     id: 'baSau',
-    name: { vi: 'Bà Sáu', en: 'Granny Sau', de: 'Oma Sau' },
+    name: { vi: 'Bà Thu', en: 'Granny Thu', de: 'Oma Thu' },
     title: { vi: 'Bán trà đá', en: 'Iced-tea seller', de: 'Eistee-Verkäuferin' },
     outfit: { skin: '#f0c8a8', hair: '#d9d6dc', hairStyle: 'bun', shirt: '#b8d8f0', shorts: '#3f4a5c', shoe: '#5d6170', bag: null, accessory: null },
     dialogueId: 'baSau',
   },
   coBa: {
     id: 'coBa',
-    name: { vi: 'Cô Ba', en: 'Auntie Ba', de: 'Tante Ba' },
+    name: { vi: 'Cô Liên', en: 'Auntie Liên', de: 'Tante Liên' },
     title: { vi: 'Chủ tạp hóa', en: 'Grocery owner', de: 'Ladenbesitzerin' },
     outfit: { skin: '#f5cfb0', hair: '#2b2222', hairStyle: 'bun', shirt: '#f7a8c0', shorts: '#2f3a4d', shoe: '#ff9b8f', bag: null, accessory: null },
     dialogueId: 'coBa',
   },
   chuBay: {
     id: 'chuBay',
-    name: { vi: 'Chú Bảy', en: 'Uncle Bay', de: 'Onkel Bay' },
+    name: { vi: 'Chú Bình', en: 'Uncle Bình', de: 'Onkel Bình' },
     title: { vi: 'Bánh mì dạo', en: 'Bánh mì vendor', de: 'Bánh-mì-Verkäufer' },
     outfit: { skin: '#e8b994', hair: '#2a2020', hairStyle: 'short', shirt: '#efe0bd', shorts: '#5d6b8a', shoe: '#5d6170', bag: null, accessory: 'nonLa' },
     dialogueId: 'chuBay',
   },
   chuNam: {
     id: 'chuNam',
-    name: { vi: 'Chú Năm', en: 'Uncle Nam', de: 'Onkel Nam' },
+    name: { vi: 'Bác Hùng', en: 'Uncle Hùng', de: 'Onkel Hùng' },
     // The classic white tank top (áo ba lỗ).
     outfit: { skin: '#e8b994', hair: '#4a4448', hairStyle: 'short', shirt: '#ffffff', shorts: '#6b7a8f', shoe: '#5d6170', bag: null, accessory: null },
   },
   anhHai: {
     id: 'anhHai',
-    name: { vi: 'Anh Hai', en: 'Brother Hai', de: 'Bruder Hai' },
+    name: { vi: 'Anh Đức', en: 'Đức', de: 'Bruder Đức' },
     outfit: { skin: '#f0c8a8', hair: '#1c1818', hairStyle: 'short', shirt: '#7fb8e8', shorts: '#3f4a5c', shoe: '#ffffff', bag: null, accessory: null },
   },
   beTi: {
@@ -130,6 +130,39 @@ export const NPCS = {
     name: { vi: 'Bạn Vy', en: 'Vy', de: 'Vy' },
     outfit: { skin: '#fbdcc4', hair: '#2b2222', hairStyle: 'bob', shirt: '#ffe08a', shorts: '#8e7cc3', shoe: '#ffffff', bag: '#ff9fb2', accessory: null },
   },
+  // Classmates at the German centre (decor, seated)
+  hvLinh: {
+    id: 'hvLinh',
+    name: { vi: 'Linh', en: 'Linh', de: 'Linh' },
+    outfit: { skin: '#f9d4b8', hair: '#2b2222', hairStyle: 'bun', shirt: '#ffffff', shorts: '#2f3a4d', shoe: '#ffffff', bag: '#a8e6cf', accessory: null },
+  },
+  hvQuang: {
+    id: 'hvQuang',
+    name: { vi: 'Quang', en: 'Quang', de: 'Quang' },
+    outfit: { skin: '#eec39f', hair: '#1f1a1a', hairStyle: 'short', shirt: '#7fb8e8', shorts: '#4f5d75', shoe: '#5d6170', bag: '#ffc27a', accessory: 'glasses' },
+  },
+  hvThao: {
+    id: 'hvThao',
+    name: { vi: 'Thảo', en: 'Thảo', de: 'Thảo' },
+    outfit: { skin: '#fbdcc4', hair: '#4a3328', hairStyle: 'bob', shirt: '#ffb3c7', shorts: '#6b7cb8', shoe: '#ff9b8f', bag: null, accessory: null },
+  },
+  hvNam: {
+    id: 'hvNam',
+    name: { vi: 'Nam', en: 'Nam', de: 'Nam' },
+    outfit: { skin: '#e8b994', hair: '#2a2020', hairStyle: 'short', shirt: '#b8e6c9', shorts: '#3f4a5c', shoe: '#ffffff', bag: null, accessory: null },
+  },
+  giamThi: {
+    id: 'giamThi',
+    name: { vi: 'Cô giám thị', en: 'Exam supervisor', de: 'Prüfungsaufsicht' },
+    outfit: { skin: '#f5cfb0', hair: '#3d2c2c', hairStyle: 'bun', shirt: '#2f3a4d', shorts: '#2f3a4d', shoe: '#5d6170', bag: null, accessory: 'glasses' },
+  },
+  chiLua: {
+    id: 'chiLua',
+    name: { vi: 'Chị Lụa', en: 'Lụa', de: 'Lụa' },
+    title: { vi: 'Xe đạp bán hoa', en: 'Flower bicycle', de: 'Blumenfahrrad' },
+    outfit: { skin: '#f0c8a8', hair: '#2b2222', hairStyle: 'bun', shirt: '#fff3dc', shorts: '#8e7cc3', shoe: '#ffffff', bag: null, accessory: 'nonLa' },
+    dialogueId: 'chiLua',
+  },
   chiMai: {
     id: 'chiMai',
     name: { vi: 'Chị Mai', en: 'Mai', de: 'Mai' },
@@ -139,7 +172,7 @@ export const NPCS = {
   },
   anhTu: {
     id: 'anhTu',
-    name: { vi: 'Anh Tư', en: 'Brother Tư', de: 'Bruder Tư' },
+    name: { vi: 'Anh Tú', en: 'Tú', de: 'Bruder Tú' },
     title: { vi: 'Xe ôm', en: 'Motorbike taxi', de: 'Motorradtaxi' },
     outfit: { skin: '#e8b994', hair: '#1c1818', hairStyle: 'short', shirt: '#8fbf6a', shorts: '#4f5d75', shoe: '#5d6170', bag: null, accessory: 'helmet', accent: '#2f8c7f' },
     dialogueId: 'xeOm',
@@ -153,8 +186,8 @@ export const NPCS = {
   },
   chuSau: {
     id: 'chuSau',
-    name: { vi: 'Chú Sáu', en: 'Uncle Sáu', de: 'Onkel Sáu' },
-    title: { vi: 'Thợ hớt tóc', en: 'Barber', de: 'Friseur' },
+    name: { vi: 'Chú Thắng', en: 'Uncle Thắng', de: 'Onkel Thắng' },
+    title: { vi: 'Thợ cắt tóc vỉa hè', en: 'Barber', de: 'Friseur' },
     outfit: { skin: '#e8b994', hair: '#9a9298', hairStyle: 'short', shirt: '#b8d8f0', shorts: '#3f4a5c', shoe: '#5d6170', bag: null, accessory: null },
     dialogueId: 'chuSau',
   },

@@ -27,13 +27,24 @@ export interface TravelOptions {
   long?: boolean
   /** Runs while the screen is black, after the scene switched. */
   onArrive?: () => void
+  /** Runs once the screen has faded back in and the player is free again. */
+  onDone?: () => void
+  icon?: string
+  subtitle?: Localized | null
+  tone?: 'night' | 'chalk' | 'paper'
 }
 
 /** Fade out, switch scene, place the player, fade in. */
 export function travelTo(scene: SceneId, spawnKey = 'default', opts: TravelOptions = {}) {
   const ui = useUI.getState()
   if (ui.transition) return
-  ui.setTransition({ label: opts.label === undefined ? SCENES[scene].name : opts.label, long: !!opts.long })
+  ui.setTransition({
+    label: opts.label === undefined ? SCENES[scene].name : opts.label,
+    long: !!opts.long,
+    icon: opts.icon,
+    subtitle: opts.subtitle,
+    tone: opts.tone,
+  })
   playerState.locked = true
   playerState.path = []
   ui.setMovementLocked(true)
@@ -48,6 +59,7 @@ export function travelTo(scene: SceneId, spawnKey = 'default', opts: TravelOptio
       () => {
         useUI.getState().setTransition(null)
         releasePlayer()
+        opts.onDone?.()
       },
       opts.long ? 2600 : 700,
     )

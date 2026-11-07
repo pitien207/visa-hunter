@@ -31,11 +31,11 @@ export function StreetLife() {
       <TraDaStall />
       <HomeDoor />
 
-      {/* Cô Ba fans herself in front of her grocery */}
+      {/* Cô Liên fans herself in front of her grocery */}
       <Shapes shapes={coBaStool} />
       <NPC def={NPCS.coBa} at={GROCERY.coBa} yaw={0.15} seatY={STOOL_TOP} activity="fan" zone={GROCERY.zone} extraActions={SHOP_ACTION} />
 
-      {/* Chú Bảy strolls with his shoulder pole of bánh mì */}
+      {/* Chú Bình strolls with his shoulder pole of bánh mì */}
       <NPC
         def={NPCS.chuBay}
         at={VENDOR_PATH[0]}

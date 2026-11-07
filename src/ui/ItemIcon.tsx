@@ -165,7 +165,23 @@ function Kuchen(props: Props) {
   )
 }
 
+/** A paper-wrapped bunch of white daisies (cúc họa mi, Hà Nội's early-winter flower). */
+function Hoa(props: Props) {
+  return (
+    <Base {...props}>
+      <path d="M9 16l7 13 7-13z" fill="#f6e4c0" stroke={INK} strokeWidth="2" strokeLinejoin="round" />
+      {[[11, 10], [16, 7], [21, 10], [13.5, 14], [18.5, 14]].map(([x, y], i) => (
+        <g key={i}>
+          <circle cx={x} cy={y} r="3.4" fill="#ffffff" stroke={INK} strokeWidth="1.2" />
+          <circle cx={x} cy={y} r="1.3" fill="#f7c948" />
+        </g>
+      ))}
+    </Base>
+  )
+}
+
 const ICONS: Record<ItemIconName, (props: Props) => JSX.Element> = {
+  hoa: Hoa,
   broetchen: Broetchen,
   brezel: Brezel,
   doener: Doener,

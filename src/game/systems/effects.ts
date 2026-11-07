@@ -2,19 +2,20 @@ import { CONFIG } from '../../data/config'
 import type { DialogueEffect } from '../../data/dialogues'
 import { getItem, type ItemDef } from '../../data/items'
 import { currentLanguage, localize } from '../../i18n/localized'
-import { translate } from '../../i18n'
 import { useInventory } from '../../store/inventoryStore'
 import { usePlayer } from '../../store/playerStore'
 import { useTime } from '../../store/timeStore'
 import { pushToast } from '../../store/toastStore'
 import { useUI } from '../../store/uiStore'
 import { runAction } from './actions'
-import { bumpFlag, setFlag } from './conditions'
-import { cameraState } from './cameraState'
-import { playerState, releasePlayer, teleportPlayer, walkTo } from './playerState'
+import { bumpFlag, getFlag, setFlag } from './conditions'
+import { playerState, releasePlayer, walkTo } from './playerState'
+import { useWorld, type SceneId } from '../../store/worldStore'
+import { SCENES } from '../scenes/registry'
+import { placeAtSpawn } from './travel'
 import { getSeat } from './registry'
 import { saveGame } from './save'
-import { canSleep, spendTime, weekdayIndex } from './time'
+import { canSleep, spendTime } from './time'
 
 /**
  * Things that change the player's state: buying, eating, sitting down for a drink,
@@ -98,10 +99,15 @@ function wakeUp(energy: number, mood: number) {
   player.restoreEnergy(energy)
   player.changeMood(mood)
   saveGame()
-  pushToast('toast.newDay', 'good', {
-    weekday: translate(currentLanguage(), `weekday.${weekdayIndex(day)}` as 'weekday.0'),
-    day,
-  })
+  // The "new day" card: date, weather, yesterday's summary.
+  useUI.getState().setNewDayOpen(true)
+}
+
+/** Where you wake up after passing out: your bed at home, or your room / the street in Germany. */
+function wakePlace(): [SceneId, string] {
+  const country = SCENES[useWorld.getState().scene].country
+  if (country === 'vn') return ['home', 'bed']
+  return getFlag('de.wg') ? ['wg', 'default'] : ['germany', 'default']
 }
 
 const SLEEP_MS = 2200
@@ -131,9 +137,11 @@ export function passOut() {
   window.setTimeout(() => {
     const player = usePlayer.getState()
     const missing = Math.max(0, CONFIG.needs.passOutEnergy - player.energy)
-    const [x, , z] = CONFIG.player.spawn
-    teleportPlayer(x, z)
-    cameraState.yaw = CONFIG.camera.initialYaw
+    const [scene, spawn] = wakePlace()
+    useWorld.getState().setScene(scene)
+    placeAtSpawn(scene, spawn)
+    const summary = useUI.getState().daySummary
+    if (summary) useUI.getState().setDaySummary({ ...summary, passedOut: true })
     wakeUp(missing, CONFIG.needs.passOutMood)
     useUI.getState().setSleeping(false)
   }, SLEEP_MS)

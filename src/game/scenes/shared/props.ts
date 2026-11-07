@@ -152,3 +152,51 @@ export function bicycleShapes(color: string): ShapeItem[] {
     { box: [0.32, 0.22, 0.26], at: [0, 0.82, 0.78], color: '#d9b46b' },
   ]
 }
+
+/** Hà Nội's flower bicycle: an old bike with a rack and two baskets overflowing with flowers. Faces +Z. */
+export function flowerBikeShapes(): ShapeItem[] {
+  const s: ShapeItem[] = [...bicycleShapes('#3f7d5c')]
+  // Rear rack + two woven baskets either side of the back wheel
+  s.push({ box: [0.5, 0.04, 0.5], at: [0, 0.78, -0.45], color: '#5d6170' })
+  for (const side of [-1, 1]) {
+    s.push({ cyl: [0.22, 0.17, 0.38, 10], at: [side * 0.34, 0.68, -0.45], color: '#c49a6c' })
+    s.push({ cyl: [0.225, 0.225, 0.04, 10], at: [side * 0.34, 0.86, -0.45], color: '#a8754f' })
+  }
+  // Bunches of flowers: lotus pink, daisies white, roses red, sunflowers yellow
+  const COLORS = ['#ff9fcf', '#ffffff', '#ff6b7a', '#ffd84d', '#ffc2e0', '#ffffff']
+  let n = 0
+  for (const side of [-1, 1]) {
+    for (let i = 0; i < 6; i++) {
+      const a = (i / 6) * Math.PI * 2
+      const x = side * 0.34 + Math.cos(a) * 0.12
+      const z = -0.45 + Math.sin(a) * 0.12
+      s.push({ cyl: [0.008, 0.008, 0.35, 4], at: [x, 1.02, z], color: '#5f9e57' })
+      s.push({ ico: [0.07 + (n % 3) * 0.015, 0], at: [x, 1.2 + (i % 2) * 0.07, z], color: COLORS[n++ % COLORS.length] })
+    }
+  }
+  // A bundle across the rack and a few leaves
+  for (let i = 0; i < 5; i++) s.push({ ico: [0.07, 0], at: [-0.16 + i * 0.08, 0.9 + (i % 2) * 0.04, -0.62], color: COLORS[(i + 2) % COLORS.length] })
+  s.push({ ico: [0.12, 0], at: [0, 0.88, -0.3], color: '#7cc27a' })
+  return s
+}
+
+/** A parked xích lô (cyclo): passenger seat with a folded hood in front, rider seat at the back. Faces +Z. */
+export function cycloShapes(color = '#2f6b8f'): ShapeItem[] {
+  const s: ShapeItem[] = []
+  for (const side of [-1, 1]) s.push({ torus: [0.28, 0.03, 5, 16], at: [side * 0.42, 0.3, 0.55], rot: [0, Math.PI / 2, 0], color: '#3d3d48' })
+  s.push({ torus: [0.3, 0.03, 5, 16], at: [0, 0.32, -0.75], rot: [0, Math.PI / 2, 0], color: '#3d3d48' })
+  // Passenger seat
+  s.push({ box: [0.78, 0.1, 0.55], at: [0, 0.55, 0.45], color })
+  s.push({ box: [0.72, 0.1, 0.48], at: [0, 0.64, 0.45], color: '#c8322b' })
+  s.push({ box: [0.78, 0.55, 0.08], at: [0, 0.88, 0.2], color })
+  s.push({ box: [0.7, 0.45, 0.06], at: [0, 0.9, 0.24], color: '#c8322b' })
+  for (const side of [-1, 1]) s.push({ box: [0.06, 0.3, 0.5], at: [side * 0.39, 0.75, 0.45], color })
+  // Folded canvas hood
+  s.push({ sphere: [0.42, 10, 6, Math.PI / 2], at: [0, 0.92, 0.18], rot: [-0.9, 0, 0], scale: [0.95, 0.75, 0.6], color: '#2f3a4d' })
+  // Frame to the rider seat
+  s.push({ cyl: [0.03, 0.03, 1.1, 5], at: [0, 0.55, -0.25], rot: [Math.PI / 2 - 0.25, 0, 0], color })
+  s.push({ cyl: [0.03, 0.03, 0.6, 5], at: [0, 0.8, -0.75], color })
+  s.push({ box: [0.2, 0.06, 0.3], at: [0, 1.12, -0.72], color: '#6a4a40' })
+  s.push({ cyl: [0.02, 0.02, 0.5, 5], at: [0, 1.0, -0.38], rot: [0, 0, Math.PI / 2], color: '#4a4a55' })
+  return s
+}

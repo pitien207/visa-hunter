@@ -22,7 +22,7 @@ export function isRainyDay(day: number, country: Country) {
   return hash(day * 7 + (country === 'de' ? 3 : 1)) < CONFIG.weather.rainChance[country]
 }
 
-/** Is it raining right now? German rain lasts all day, Saigon gets an afternoon shower. */
+/** Is it raining right now? German rain lasts all day, Hà Nội gets a morning drizzle (mưa phùn). */
 export function isRaining(day: number, minutes: number, country: Country) {
   if (!isRainyDay(day, country)) return false
   if (country === 'de') return true

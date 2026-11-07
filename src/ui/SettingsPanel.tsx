@@ -3,7 +3,7 @@ import { CONFIG, type QualityLevel } from '../data/config'
 import { exportSave, importSave, resetSave, suspendSaving } from '../game/systems/save'
 import { LANGUAGE_NAMES, useT } from '../i18n'
 import { useDialogue } from '../store/dialogueStore'
-import { useSettings, type Language } from '../store/settingsStore'
+import { useSettings, type TimeSpeed, type Language } from '../store/settingsStore'
 import { useUI } from '../store/uiStore'
 import { CloseIcon } from './icons'
 
@@ -153,7 +153,7 @@ export function SettingsPanel() {
   const t = useT()
   const open = useUI((s) => s.settingsOpen)
   const setOpen = useUI((s) => s.setSettingsOpen)
-  const { musicOn, toggleMusic, sfxOn, toggleSfx, quality, setQuality, language, setLanguage } = useSettings()
+  const { musicOn, toggleMusic, sfxOn, toggleSfx, quality, setQuality, language, setLanguage, timeSpeed, setTimeSpeed } = useSettings()
   const fullscreen = useFullscreen()
 
   useEffect(() => {
@@ -212,6 +212,17 @@ export function SettingsPanel() {
               onChange={(v) => {
                 if ((v === 'on') !== sfxOn) toggleSfx()
               }}
+            />
+          </Row>
+          <Row label={t('clock.speed')}>
+            <Segmented<TimeSpeed>
+              value={timeSpeed}
+              options={[
+                { value: 'slow', label: t('clock.speed.slow') },
+                { value: 'normal', label: t('clock.speed.normal') },
+                { value: 'fast', label: t('clock.speed.fast') },
+              ]}
+              onChange={setTimeSpeed}
             />
           </Row>
           <Row label={t('settings.graphics')}>

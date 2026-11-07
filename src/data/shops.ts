@@ -14,7 +14,7 @@ export interface ShopDef {
 export const SHOPS = {
   taphoa: {
     id: 'taphoa',
-    name: { vi: 'Tạp hóa Cô Ba', en: "Auntie Ba's grocery", de: 'Tante Bas Laden' },
+    name: { vi: 'Tạp hóa Cô Liên', en: "Auntie Liên's grocery", de: 'Tante Liêns Laden' },
     items: ['miGoi', 'banhBao', 'xoi', 'nuocMia', 'tangLuc'],
   },
   supermarkt: {

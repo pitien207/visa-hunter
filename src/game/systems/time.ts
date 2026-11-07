@@ -35,6 +35,8 @@ export function isTimePaused() {
     ui.panel !== null ||
     ui.sleeping ||
     ui.transition !== null ||
+    ui.fastForward !== null ||
+    ui.newDayOpen ||
     useDialogue.getState().npcId !== null ||
     useWork.getState().session !== null ||
     useCare.getState().session !== null ||
