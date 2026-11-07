@@ -1,0 +1,228 @@
+@import 'tailwindcss';
+
+/*
+ * Visual language: warm "giấy dó" paper panels with a faint flower pattern, lacquer red
+ * (sơn mài) + gold for primary actions, jade green for secondary ones — the colours
+ * of Tết decorations, Hội An lanterns and old shop signs.
+ */
+@theme {
+  --font-sans: 'Nunito', ui-rounded, 'Segoe UI', system-ui, sans-serif;
+  --font-display: 'Baloo 2', 'Nunito', ui-rounded, system-ui, sans-serif;
+
+  --color-ink: #5b4636;
+  --color-cream: #fffaf2;
+  --color-paper: #fff6e3;
+  --color-paper-line: #efd3a0;
+  --color-lacquer: #d4473b;
+  --color-lacquer-dark: #9e2f27;
+  --color-gold: #f4c04e;
+  --color-gold-light: #ffe6a6;
+  --color-jade: #2f8c7f;
+  --color-jade-dark: #1f655c;
+  --color-peach: #ffc3a0;
+  --color-mint: #a8e6cf;
+  --color-sky: #bfe3ff;
+  --color-butter: #ffe08a;
+  --color-rose: #ff9fb2;
+
+  --animate-pop: pop 0.28s cubic-bezier(0.34, 1.56, 0.64, 1) both;
+  --animate-float-up: float-up 1.6s ease-out forwards;
+  --animate-coin: coin 0.5s ease-out;
+  --animate-emote: emote 1s ease-out forwards;
+  --animate-sway: sway 3.2s ease-in-out infinite;
+  --animate-bubble: bubble 0.25s cubic-bezier(0.34, 1.56, 0.64, 1) both;
+  --animate-sheet: sheet 0.3s cubic-bezier(0.22, 1, 0.36, 1) both;
+  --animate-nudge: nudge 1s ease-in-out infinite;
+
+  @keyframes pop {
+    from {
+      transform: scale(0.6);
+      opacity: 0;
+    }
+    to {
+      transform: scale(1);
+      opacity: 1;
+    }
+  }
+  @keyframes float-up {
+    0% {
+      transform: translateY(6px);
+      opacity: 0;
+    }
+    15% {
+      transform: translateY(0);
+      opacity: 1;
+    }
+    75% {
+      opacity: 1;
+    }
+    100% {
+      transform: translateY(-14px);
+      opacity: 0;
+    }
+  }
+  @keyframes coin {
+    0%,
+    100% {
+      transform: scale(1) rotate(0);
+    }
+    40% {
+      transform: scale(1.5) rotate(-15deg);
+    }
+  }
+  @keyframes emote {
+    0% {
+      transform: translateY(8px) scale(0.4);
+      opacity: 0;
+    }
+    25% {
+      transform: translateY(0) scale(1.15);
+      opacity: 1;
+    }
+    80% {
+      opacity: 1;
+    }
+    100% {
+      transform: translateY(-18px) scale(1);
+      opacity: 0;
+    }
+  }
+  @keyframes sway {
+    0%,
+    100% {
+      transform: rotate(-5deg);
+    }
+    50% {
+      transform: rotate(5deg);
+    }
+  }
+  @keyframes bubble {
+    from {
+      transform: translateY(6px) scale(0.7);
+      opacity: 0;
+    }
+    to {
+      transform: translateY(0) scale(1);
+      opacity: 1;
+    }
+  }
+  @keyframes sheet {
+    from {
+      transform: translateY(24px);
+      opacity: 0;
+    }
+    to {
+      transform: translateY(0);
+      opacity: 1;
+    }
+  }
+  @keyframes nudge {
+    0%,
+    100% {
+      transform: translateY(0);
+    }
+    50% {
+      transform: translateY(3px);
+    }
+  }
+}
+
+/* Respect the iPhone notch / home indicator (viewport-fit=cover in index.html). */
+@utility pt-safe {
+  padding-top: max(0.625rem, env(safe-area-inset-top));
+}
+@utility px-safe {
+  padding-left: max(0.75rem, env(safe-area-inset-left));
+  padding-right: max(0.75rem, env(safe-area-inset-right));
+}
+
+/* Paper panel with a thin gold inner line and a faint four-petal flower pattern. */
+@utility panel {
+  background-color: var(--color-paper);
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='28' height='28' viewBox='0 0 28 28'%3E%3Cg fill='%23f3dfbd' fill-opacity='0.55'%3E%3Ccircle cx='14' cy='10.5' r='2.2'/%3E%3Ccircle cx='14' cy='17.5' r='2.2'/%3E%3Ccircle cx='10.5' cy='14' r='2.2'/%3E%3Ccircle cx='17.5' cy='14' r='2.2'/%3E%3C/g%3E%3Ccircle cx='14' cy='14' r='1.3' fill='%23f0c87a' fill-opacity='0.6'/%3E%3C/svg%3E");
+  border-radius: 1.5rem;
+  box-shadow:
+    inset 0 0 0 3px var(--color-paper),
+    inset 0 0 0 5px var(--color-paper-line),
+    0 5px 0 rgba(91, 70, 54, 0.25);
+}
+
+/* Small HUD chips: paper with a gold edge. */
+@utility hud-chip {
+  background-color: color-mix(in srgb, var(--color-paper) 93%, transparent);
+  border-radius: 1rem;
+  box-shadow:
+    inset 0 0 0 2px #f1dcb6,
+    0 3px 0 rgba(91, 70, 54, 0.22);
+  backdrop-filter: blur(6px);
+}
+
+/* Lacquer-red button with gold lettering (Tết / lì xì colours). */
+@utility btn-lacquer {
+  background-color: var(--color-lacquer);
+  color: var(--color-gold-light);
+  box-shadow:
+    inset 0 0 0 2px rgba(255, 230, 166, 0.5),
+    0 4px 0 var(--color-lacquer-dark);
+}
+
+/* Jade button for secondary actions. */
+@utility btn-jade {
+  background-color: var(--color-jade);
+  color: #ffffff;
+  box-shadow:
+    inset 0 0 0 2px rgba(255, 255, 255, 0.3),
+    0 4px 0 var(--color-jade-dark);
+}
+
+/* Red ribbon title with gold text. */
+@utility ribbon {
+  background-color: var(--color-lacquer);
+  color: var(--color-gold-light);
+  font-family: var(--font-display);
+  font-weight: 800;
+  border-radius: 9999px;
+  box-shadow:
+    inset 0 0 0 2px rgba(255, 230, 166, 0.55),
+    0 3px 0 var(--color-lacquer-dark);
+}
+
+html,
+body,
+#root {
+  height: 100%;
+  margin: 0;
+}
+
+body {
+  /* Fixed body stops iOS rubber-band scrolling and pull-to-refresh. */
+  position: fixed;
+  inset: 0;
+  overflow: hidden;
+  overscroll-behavior: none;
+  background: var(--color-sky);
+  color: var(--color-ink);
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+  -webkit-user-select: none;
+  user-select: none;
+  -webkit-touch-callout: none;
+  -webkit-tap-highlight-color: transparent;
+  touch-action: none;
+}
+
+canvas {
+  display: block;
+  touch-action: none;
+}
+
+button {
+  cursor: pointer;
+  touch-action: manipulation;
+}
+
+textarea {
+  -webkit-user-select: text;
+  user-select: text;
+  touch-action: auto;
+}

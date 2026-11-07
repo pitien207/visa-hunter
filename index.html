@@ -1,0 +1,52 @@
+<!doctype html>
+<html lang="vi">
+  <head>
+    <meta charset="UTF-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover"
+    />
+    <title>Visa Hunter</title>
+    <meta name="description" content="Game 3D dễ thương: học tiếng Đức, săn visa và bắt đầu cuộc sống mới ở Đức." />
+    <meta name="theme-color" content="#bfe3ff" />
+    <meta name="mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="default" />
+    <meta name="apple-mobile-web-app-title" content="Visa Hunter" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="apple-touch-icon" href="/icons/apple-touch-icon.png" />
+    <link rel="manifest" href="/manifest.webmanifest" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <!-- Fonts load without blocking the first paint (system fonts until then). -->
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@600;700;800&family=Nunito:wght@700;800;900&display=swap"
+      media="print"
+      onload="this.media='all'"
+    />
+    <noscript>
+      <link
+        rel="stylesheet"
+        href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@600;700;800&family=Nunito:wght@700;800;900&display=swap"
+      />
+    </noscript>
+    <style>
+      /* Static splash, shown while the game code downloads; React replaces it. */
+      html, body, #root { height: 100%; margin: 0; }
+      .splash {
+        height: 100%; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 6px;
+        background: linear-gradient(#ffd9a8, #ffe9cc 50%, #fffaf2); color: #5b4636;
+        font-family: 'Baloo 2', 'Nunito', system-ui, sans-serif; text-align: center; padding: 0 24px;
+      }
+      .splash b { font-size: 56px; line-height: 1; color: #d4473b; text-shadow: 0 4px 0 #f4c04e; letter-spacing: -1px; }
+      .splash span { font-size: 15px; font-weight: 700; opacity: 0.75; }
+    </style>
+  </head>
+  <body>
+    <div id="root">
+      <div class="splash"><b>Visa Hunter</b><span>Hành trình từ phố nhỏ Việt Nam đến nước Đức</span></div>
+    </div>
+    <script type="module" src="/src/main.tsx"></script>
+  </body>
+</html>

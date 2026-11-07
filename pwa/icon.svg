@@ -1,0 +1,24 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+  <!-- Visa Hunter app icon (original artwork). Full-bleed background so it also works as a maskable icon. -->
+  <defs>
+    <linearGradient id="sky" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#bfe3ff"/>
+      <stop offset="1" stop-color="#fff1dc"/>
+    </linearGradient>
+  </defs>
+  <rect width="512" height="512" fill="url(#sky)"/>
+  <circle cx="400" cy="118" r="44" fill="#ffe08a"/>
+  <path d="M60 150c24-20 60-20 80 0 18-14 46-12 60 6" fill="none" stroke="#ffffff" stroke-width="18" stroke-linecap="round"/>
+  <g transform="rotate(-9 256 286)">
+    <rect x="150" y="138" width="212" height="286" rx="26" fill="#a8322a"/>
+    <rect x="140" y="128" width="212" height="286" rx="26" fill="#d4473b"/>
+    <rect x="160" y="148" width="172" height="246" rx="16" fill="none" stroke="#f4c04e" stroke-width="6"/>
+    <circle cx="246" cy="250" r="54" fill="none" stroke="#f4c04e" stroke-width="10"/>
+    <path d="M246 214l10 22 24 3-18 16 5 24-21-12-21 12 5-24-18-16 24-3z" fill="#f4c04e"/>
+    <rect x="196" y="334" width="100" height="14" rx="7" fill="#f4c04e"/>
+  </g>
+  <g transform="translate(330 300) rotate(-24)">
+    <path d="M0 40L120 0 70 70 52 50z" fill="#ffffff" stroke="#5b4636" stroke-width="6" stroke-linejoin="round"/>
+    <path d="M52 50L120 0" stroke="#5b4636" stroke-width="5"/>
+  </g>
+</svg>

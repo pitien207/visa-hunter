@@ -1,0 +1,20 @@
+{
+  "name": "Visa Hunter",
+  "short_name": "Visa Hunter",
+  "description": "Game 3D dễ thương: học tiếng Đức, săn visa và bắt đầu cuộc sống mới ở Đức.",
+  "lang": "vi",
+  "id": "./",
+  "start_url": "./",
+  "scope": "./",
+  "display": "fullscreen",
+  "display_override": ["fullscreen", "standalone"],
+  "orientation": "any",
+  "background_color": "#fff6ea",
+  "theme_color": "#bfe3ff",
+  "categories": ["games", "education"],
+  "icons": [
+    { "src": "icons/icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any" },
+    { "src": "icons/icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any" },
+    { "src": "icons/icon-maskable-512.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable" }
+  ]
+}
